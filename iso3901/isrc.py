@@ -13,22 +13,22 @@ class ISRC:
     Attributes:
         owner (str): 5-letter registrant code of issuer of ISRC, with
             first 2 characters strictly alphabetic and remaining alphanumeric
+        year (int): last 2 digit of reference year (usually means recording year)
+        designation (int): 5-digit identifier for recording, unique within
+            above reference year.
         country (:obj:`str` or :obj:`None`): During earlier years of ISRC
             allowcation, first 2 letters of registrant code was ISO 3166 country
             code. This country attribute is set if it is found. Newer allocation
             of ISRC registrant may not follow previous rule.
-        year (int): last 2 digit of reference year (usually means recording year)
-        designation (int): 5-digit identifier for recording, unique within
-            above reference year.
         raw (:obj:`str` or :obj:`None`): If ISRC is parsed via `parse` method,
             this attribute preserves the original string.
     """
 
     owner: str
-    country: Optional[iso3166.Country] = field(default=None, init=False)
     year: int
     designation: int
-    raw: Optional[str] = field(default=None, init=False, repr=False)
+    country: Optional[iso3166.Country] = field(default=None, init=False, compare=False)
+    raw: Optional[str] = field(default=None, init=False, repr=False, compare=False)
 
     def __post_init__(self):
         try:

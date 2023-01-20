@@ -12,7 +12,9 @@ The most usual way to create object is via `ISRC.parse` method:
 ```pycon
 >>> from iso3901 import ISRC
 
->>> data = ISRC.parse('ISRC GB-AJY-12-34567')  # 'GBAJY1234567' is fine too
+>>> data = ISRC.parse('ISRC GB-AJY-12-34567')
+>>> data == ISRC.parse('GBAJY1234567')  # Same as compact form
+True
 >>> data.country.name
 'United Kingdom of Great Britain and Northern Ireland'
 >>> data.owner

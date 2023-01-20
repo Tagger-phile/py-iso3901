@@ -12,17 +12,21 @@ The most usual way to create object is via `ISRC.parse` method:
 ```pycon
 >>> from iso3901 import ISRC
 
->>> data = ISRC.parse('GBAJY1234567')  # 'ISRC GB-AJY-12-34567' is fine too
+>>> data = ISRC.parse('ISRC GB-AJY-12-34567')  # 'GBAJY1234567' is fine too
 >>> data.country.name
 'United Kingdom of Great Britain and Northern Ireland'
 >>> data.owner
 'GBAJY'
 >>> data.year
 12
+>>> data.designation
+34567
 >>> str(data)
 'GBAJY1234567'
 >>> data.stringify()
 'GB-AJY-12-34567'
+>>> data.raw  # Get back the original unparsed string
+'ISRC GB-AJY-12-34567'
 ```
 
 ## Caveats

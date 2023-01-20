@@ -11,24 +11,21 @@ class ISRC:
     """Base ISRC structure defined in ISO 3901:2019
 
     Attributes:
-        owner (str): 5-character registrant code of issuer of ISRC, with
+        owner (str): 5-letter registrant code of issuer of ISRC, with
             first 2 characters strictly alphabetic and remaining alphanumeric
+        country (:obj:`str` or :obj:`None`): During earlier years of ISRC
+            allowcation, first 2 letters of registrant code was ISO 3166 country
+            code. This country attribute is set if it is found. Newer allocation
+            of ISRC registrant may not follow previous rule.
         year (int): last 2 digit of reference year (usually means recording year)
         designation (int): 5-digit identifier for recording, unique within
             above reference year.
-        country (:obj:`str` or :obj:`None`): 2-character ISO 3166 country code
-            if it is found. Newer allocation of ISRC registrant no more follows
-            the rule, as some countries (in particular US) has overflowed 3-char
-            registrant code.
-        owner_short (:obj:`str` or :obj:`None`): If country can be determined,
-            this attribute represents the remaining 3-character registrant code.
         raw (:obj:`str` or :obj:`None`): If ISRC is parsed via `parse` method,
             this attribute preserves the original string.
     """
 
     owner: str
     country: Optional[iso3166.Country] = field(default=None, init=False)
-    owner_short: Optional[str] = field(default=None, init=False)
     year: int
     designation: int
     raw: Optional[str] = field(default=None, init=False, repr=False)
@@ -38,8 +35,6 @@ class ISRC:
             self.country = iso3166.countries.get(self.owner[:2])
         except KeyError:
             pass
-        else:
-            self.owner_short = self.owner[2:]
 
     def __str__(self):
         return self.stringify(False)

@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Optional, Type
+from typing import TYPE_CHECKING, Optional, Tuple, Type
 
 import iso3166
 
@@ -61,22 +61,7 @@ class ISRC:
         )
 
     @classmethod
-    def parse(cls: "Type[ISRC]", _raw: str) -> "ISRC":
-        """Parses ISRC string into structure
-
-        It checks for "CCXXXYYNNNNN" or "CC-XXX-YY-NNNNN" pattern
-        as mandated by ISRC Handbook, optionally prefixed with "ISRC ".
-
-        Args:
-            _raw (str): The string to be parsed
-
-        Raises:
-            TypeError: If supplied argument is not a string
-            ValueError: If ISRC segments do not conform to standard
-
-        Returns:
-            ISRC: The dataclass structure to return
-        """
+    def _parse(cls, _raw: str) -> Tuple[str, int, int]:
         if not isinstance(_raw, str):
             raise TypeError("Argument must be a string")
         canon = _raw.upper()
@@ -108,6 +93,46 @@ class ISRC:
         ]:
             if not segment.isascii() or not getattr(segment, method)():
                 raise ValueError(f'Unexpected character found for segment "{segment}"')
-        result = cls(country + owner, int(year), int(desig))
+        return (country + owner, int(year), int(desig))
+
+    @classmethod
+    def parse(cls: "Type[ISRC]", _raw: str) -> "ISRC":
+        """Parses ISRC string into structure
+
+        It checks for "CCXXXYYNNNNN" or "CC-XXX-YY-NNNNN" pattern
+        as mandated by ISRC Handbook, optionally prefixed with "ISRC ".
+        Any trailing text is ignored.
+
+        Args:
+            _raw (str): The string to be parsed
+
+        Raises:
+            TypeError: If supplied argument is not a string
+            ValueError: If ISRC segments do not conform to standard
+
+        Returns:
+            ISRC: The structured object to return
+        """
+        owner, year, desig = cls._parse(_raw)
+        result = cls(owner, year, desig)
         result.raw = _raw
         return result
+
+    @classmethod
+    def validate(cls, _raw: str) -> bool:
+        """Similar to `parse` method, but only for validation purpose
+
+        Args:
+            _raw (str): The string to be validated
+
+        Returns:
+            bool: Whether string is plausible ISRC code
+        """
+        try:
+            _ = cls._parse(_raw)
+        except:
+            return False
+        else:
+            return True
+
+ISRC.validate('abc')

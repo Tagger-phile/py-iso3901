@@ -31,6 +31,15 @@ True
 'ISRC GB-AJY-12-34567'
 ```
 
+`validate()` method is provided for simple validation:
+
+```pycon
+>>> ISRC.validate('isrc aa-xyz-01-23456')
+True
+>>> ISRC.validate('aa-xyz-012-3456')
+False
+```
+
 ## Caveats
 
 In the _very rare_ case that no data validation is desired, it is possible to initiate object directly. Be warned that supplying free form data would result in illegal ISRC code:
@@ -83,3 +92,5 @@ If one only needs to check for validity of ISRC string, and no objectified acces
 
 - [python-stdnum](https://pypi.org/project/python-stdnum/)
 - [py.validator](https://pypi.org/project/py-validator/)
+
+Our `ISRC` class also provides a `validate()` method as well.

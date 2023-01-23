@@ -8,7 +8,7 @@ __all__ = ("ISRC",)
 
 @dataclass
 class ISRC:
-    """Base ISRC structure defined in ISO 3901:2019
+    """Objectified ISRC structure defined in ISO 3901:2019
 
     Attributes:
         owner (str): 5-letter registrant code of issuer of ISRC, with
@@ -17,7 +17,7 @@ class ISRC:
         designation (int): 5-digit identifier for recording, unique within
             above reference year.
         country (:obj:`str` or :obj:`None`): During earlier years of ISRC
-            allowcation, first 2 letters of registrant code was ISO 3166 country
+            allocation, first 2 letters of registrant code was ISO 3166 country
             code. This country attribute is set if it is found. Newer allocation
             of ISRC registrant may not follow previous rule.
         raw (:obj:`str` or :obj:`None`): If ISRC is parsed via `parse` method,
@@ -43,9 +43,9 @@ class ISRC:
         """Print ISRC as string
 
         Args:
-            separator (bool, optional): Whether hyphen should be inserted
+            separator (:obj:`bool`, optional): Whether hyphen should be inserted
                 between segments. Defaults to True. If hyphenation is not
-                intended, it is much quicker to call `str()` on the object.
+                intended, it is much simpler to call `str()` on the object.
 
         Returns:
             str: Resulting ISRC string

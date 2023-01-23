@@ -53,14 +53,12 @@ In the _very rare_ case that no data validation is desired, it is possible to in
 'Some Owner123456789'
 ```
 
-In case ISRC code does not start with a proper ISO 3166 2-letter country code, `.country` and `.owner_short` attributes would be `None`:
+In case ISRC code does not start with a proper ISO 3166 2-letter country code, `.country` attribute would be `None`:
 
 ```pycon
 >>> data = ISRC.parse('QMDA71418090')
 >>> data.owner
 'QMDA7'
->>> data.owner_short
->>> data.country
 >>> type(data.country)
 <class 'NoneType'>
 ```

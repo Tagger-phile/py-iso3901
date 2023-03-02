@@ -16,12 +16,15 @@ class ISRC:
         year (int): last 2 digit of reference year (usually means recording year)
         designation (int): 5-digit identifier for recording, unique within
             above reference year.
-        country (:obj:`str` or :obj:`None`): During earlier years of ISRC
-            allocation, first 2 letters of registrant code was ISO 3166 country
-            code. This country attribute is set if it is found. Newer allocation
+        country (:obj:`Country` or :obj:`None`): During earlier years of ISRC
+            allocation, first 2 letters of registrant code was mandated as ISO 3166
+            country code. This country attribute is set if it is found. Newer allocation
             of ISRC registrant may not follow previous rule.
         raw (:obj:`str` or :obj:`None`): If ISRC is parsed via `parse` method,
             this attribute preserves the original string.
+
+    See also:
+        - `Python ISO3166 package <https://github.com/deactivated/python-iso3166>`_
     """
 
     owner: str
@@ -62,8 +65,9 @@ class ISRC:
 
     @classmethod
     def _parse(cls, _raw: str) -> Tuple[str, int, int]:
-        if not isinstance(_raw, str):
-            raise TypeError("Argument must be a string")
+        if not TYPE_CHECKING:
+            if not isinstance(_raw, str):
+                raise TypeError("Argument must be a string")
         canon = _raw.upper()
         if canon.startswith("ISRC "):
             canon = canon[5:]
@@ -76,11 +80,14 @@ class ISRC:
                 canon[5:7],
                 canon[7:12],
             )
-        if TYPE_CHECKING:
-            segment: str
-            length: int
-            method: str
-        for (segment, length) in [(country, 2), (owner, 3), (year, 2), (desig, 5)]:
+        # fmt: off
+        for (segment, length, method) in [
+            (country, 2, "isalpha"),
+            (owner  , 3, "isalnum"),
+            (year   , 2, "isdigit"),
+            (desig  , 5, "isdigit"),
+        ]:
+        # fmt: on
             if len(segment) != length:
                 raise ValueError(
                     f'Wrong length for segment "{segment}", expected {length} characters'
@@ -99,7 +106,7 @@ class ISRC:
     def parse(cls: "Type[ISRC]", _raw: str) -> "ISRC":
         """Parses ISRC string into structure
 
-        It checks for "CCXXXYYNNNNN" or "CC-XXX-YY-NNNNN" pattern
+        It checks for ``CCOOOYYNNNNN`` or ``CC-OOO-YY-NNNNN`` pattern
         as mandated by ISRC Handbook, optionally prefixed with "ISRC ".
         Any trailing text is ignored.
 
@@ -120,7 +127,12 @@ class ISRC:
 
     @classmethod
     def validate(cls, _raw: str) -> bool:
-        """Similar to `parse` method, but only for validation purpose
+        """Validates if supplied ISRC string is parseable.
+
+        It is almost the same as ``parse()`` method, but instead of returning
+        the ``ISRC`` object, ``validate()`` only determines if it is parseable.
+
+        See ``parse()`` method for more detail.
 
         Args:
             _raw (str): The string to be validated
@@ -134,5 +146,3 @@ class ISRC:
             return False
         else:
             return True
-
-ISRC.validate('abc')

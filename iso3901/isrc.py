@@ -92,6 +92,8 @@ _Yugoslavia = PseudoCountry(
     "891",
     "Yugoslavia",
 )
+"Prefix allocated to producers in Yugoslavia (before 2003)"
+
 _SerbiaMontenegro = PseudoCountry(
     "Serbia and Montenegro",
     "CS",
@@ -99,7 +101,10 @@ _SerbiaMontenegro = PseudoCountry(
     "891",
     "Serbia and Montenegro",
 )
+"Prefix allocated to producers in Serbia & Montenegro (before 2006)"
+
 _Worldwide = PseudoCountry("Worldwide", "", "", "", "Worldwide")
+"Fake country indicating certain ISRC prefix is allocated worldwide"
 
 class _AllocationType(NamedTuple):
     agency: Agency
@@ -109,7 +114,15 @@ _alpha2 = iso3166.countries_by_alpha2
 
 # fmt: off
 class Allocation(_AllocationType, enum.Enum):
+    """Current allocation status for ISRC prefixes
 
+    Parameters
+    ----------
+    agency : `Agency`
+        Agency enum responsible for allocation of concerned ISRC prefix
+    country : `iso3166.Country`
+        The country using concerned ISRC prefix
+    """
     # IIRA Reserved
     # XXX In ISO 3166, country code "TC" represents Turks and Caicos Islands.
     # However, IIRA has allocated "TC" prefix under TuneCore Inc.,
@@ -328,23 +341,30 @@ class Allocation(_AllocationType, enum.Enum):
 class ISRC:
     """Objectified ISRC structure defined in ISO 3901:2019
 
-    Attributes:
-        owner (str): 5-letter registrant code of issuer of ISRC, with
-            first 2 characters strictly alphabetic and remaining alphanumeric
-        year (int): last 2 digit of reference year (usually means recording year)
-        designation (int): 5-digit identifier for recording, unique within
-            above reference year.
-        raw (:obj:`str` or :obj:`None`): If ISRC is parsed via `parse` method,
-            this attribute preserves the original string.
-        country (:obj:`Country` or :obj:`None`): Read-only property corresponding
-            to country represented by first 2 letter of ISRC. This is most likely
-            the same as ISO 3166 2-letter country code, but there are exceptions.
-            The property could be None if ISRC object is manually created with
-            illegal prefix (not via ``.parse()`` method).
-        agency (:obj:`str` or :obj:`None): Read-only property corresponding to
-            national (or international) ISRC allocation agency. Like the `country`
-            property above, this property can be None if ISRC object contains
-            illegal prefix.
+    Attributes
+    ----------
+    owner : str
+        5-character registrant code of issuer of ISRC, with first 2 letters
+        strictly alphabetic and remaining alphanumeric
+    year : int
+        last 2 digit of reference year (usually means recording year)
+    designation : int
+        5-digit identifier for recording, unique within above reference year.
+    raw : str or None
+        If ISRC is parsed via `parse` method, this attribute preserves the
+        original string.
+    prefix : str
+        First 2 letters of ISRC string. See `country` property below.
+    country : iso3166.Country or None
+        Read-only property corresponding to country represented by first
+        2 letter of ISRC. This is most likely the same as ISO 3166 2-letter
+        country code, but there are exceptions. The property could be None
+        if ISRC object is manually created with illegal prefix
+        (not via ``.parse()`` method).
+    agency : str or None
+        Read-only property corresponding to national (or international)
+        ISRC allocation agency. Like the `country` property above, this property
+        can be None if ISRC object contains illegal prefix.
     """
 
     owner: str
@@ -378,13 +398,17 @@ class ISRC:
     def stringify(self, separator: bool = True) -> str:
         """Print ISRC as string
 
-        Args:
-            separator (:obj:`bool`, optional): Whether hyphen should be inserted
-                between segments. Defaults to True. If hyphenation is not
-                intended, it is much simpler to call `str()` on the object.
+        Parameters
+        ----------
+        separator : bool, optional
+            Whether hyphen should be inserted between segments. Defaults to True.
+            If hyphenation is not intended, it is much simpler to call `str()`
+            on the object.
 
-        Returns:
-            str: Resulting ISRC string
+        Returns
+        -------
+        str
+            Resulting ISRC string
         """
         sep = "-" if separator else ""
         return sep.join(
@@ -447,21 +471,29 @@ class ISRC:
         newest published prefixes by IFPI. If this check is undesirable,
         construct ISRC object directly instead of using this method.
 
-        Note:
-            This package will *never* check if ISRC string is used in
-            some sort of document as illustration purpose (and
-            therefore known invalid codes). Collecting those codes is
-            impractical.
+        Note
+        ----
+        This package will *never* check if ISRC string is used in
+        some sort of document as illustration purpose (and
+        therefore known invalid codes). Collecting those codes is
+        impractical.
 
-        Args:
-            _raw (str): The string to be parsed
+        Parameters
+        ----------
+        _raw : str
+            The ISRC string to be validated and parsed
 
-        Raises:
-            TypeError: If supplied argument is not a string
-            ValueError: If ISRC segments do not conform to standard
+        Raises
+        ------
+        TypeError
+            If supplied argument is not a string
+        ValueError
+            If ISRC segments do not conform to standard
 
-        Returns:
-            ISRC: The structured object to return
+        Returns
+        -------
+        ISRC
+            The structured object representing ISRC data
         """
         owner, year, desig = cls._parse(_raw)
         result = cls(owner, year, desig)
@@ -475,13 +507,19 @@ class ISRC:
         It is almost the same as ``parse()`` method, but instead of returning
         the ``ISRC`` object, ``validate()`` only determines if it is parseable.
 
-        See ``parse()`` method for more detail.
+        See Also
+        --------
+        - ``parse()`` method for more detail
 
-        Args:
-            _raw (str): The string to be validated
+        Parameters
+        ----------
+        _raw : str
+            The string to be validated
 
-        Returns:
-            bool: Whether string is plausible ISRC code
+        Returns
+        -------
+        bool
+            Whether string is plausible ISRC code
         """
         try:
             _ = cls._parse(_raw)

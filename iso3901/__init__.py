@@ -1,5 +1,4 @@
-"""Structured parsing of International Standard Recording
-Code (ISRC), as defined in ISO 3901:2019"""
+"""Structured parsing of ISRC (International Standard Recording Code), as defined in ISO 3901:2019"""
 
 from .isrc import (
     ISRC as ISRC,

@@ -73,6 +73,10 @@ class Agency(str, enum.Enum):
     UY = "Camara Uruguaya Del Disco"
     ZA = "RISA"
 
+    if TYPE_CHECKING:
+        @property
+        def value(self) -> str: ...
+
 #
 # Python ISO 3166 record eliminates all ceased countries,
 # so we need to recreate ourselves. Also create entry for
@@ -320,7 +324,7 @@ class Allocation(_AllocationType, enum.Enum):
     ZW = Agency.IIRA, _alpha2["ZW"]
 # fmt: on
 
-@dataclass
+@dataclass(frozen=True)
 class ISRC:
     """Objectified ISRC structure defined in ISO 3901:2019
 
@@ -330,31 +334,46 @@ class ISRC:
         year (int): last 2 digit of reference year (usually means recording year)
         designation (int): 5-digit identifier for recording, unique within
             above reference year.
-        country (:obj:`Country` or :obj:`None`): During earlier years of ISRC
-            allocation, first 2 letters of registrant code was mandated as ISO 3166
-            country code. This country attribute is set if it is found. Newer allocation
-            of ISRC registrant may not follow previous rule.
         raw (:obj:`str` or :obj:`None`): If ISRC is parsed via `parse` method,
             this attribute preserves the original string.
-
-    See also:
-        - `Python ISO3166 package <https://github.com/deactivated/python-iso3166>`_
+        country (:obj:`Country` or :obj:`None`): Read-only property corresponding
+            to country represented by first 2 letter of ISRC. This is most likely
+            the same as ISO 3166 2-letter country code, but there are exceptions.
+            The property could be None if ISRC object is manually created with
+            illegal prefix (not via ``.parse()`` method).
+        agency (:obj:`str` or :obj:`None): Read-only property corresponding to
+            national (or international) ISRC allocation agency. Like the `country`
+            property above, this property can be None if ISRC object contains
+            illegal prefix.
     """
 
     owner: str
     year: int
     designation: int
-    country: Optional[iso3166.Country] = field(default=None, init=False, compare=False)
     raw: Optional[str] = field(default=None, init=False, repr=False, compare=False)
-
-    def __post_init__(self):
-        try:
-            self.country = iso3166.countries.get(self.owner[:2])
-        except KeyError:
-            pass
 
     def __str__(self):
         return self.stringify(False)
+
+    @property
+    def prefix(self) -> str:
+        return self.owner[:2]
+
+    @property
+    def country(self) -> Optional[iso3166.Country]:
+        try:
+            alloc = Allocation[self.prefix]
+        except KeyError:
+            return
+        return alloc.country
+
+    @property
+    def agency(self) -> Optional[str]:
+        try:
+            alloc = Allocation[self.prefix]
+        except KeyError:
+            return
+        return alloc.agency.value
 
     def stringify(self, separator: bool = True) -> str:
         """Print ISRC as string
@@ -446,7 +465,7 @@ class ISRC:
         """
         owner, year, desig = cls._parse(_raw)
         result = cls(owner, year, desig)
-        result.raw = _raw
+        object.__setattr__(result, 'raw', _raw)
         return result
 
     @classmethod

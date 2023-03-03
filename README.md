@@ -19,10 +19,14 @@ True
 'United Kingdom of Great Britain and Northern Ireland'
 >>> data.owner
 'GBAJY'
+>>> data.prefix
+'GB'
 >>> data.year
 12
 >>> data.designation
 34567
+>>> data.agency
+'PPL UK'
 >>> str(data)
 'GBAJY1234567'
 >>> data.stringify()
@@ -36,13 +40,17 @@ ISRC agency prefix validation is now supported since version `0.3.0`:
 >>> data = ISRC.parse('QMDA71418090')
 >>> data.country.name
 'United States of America'
->>> data.country.alpha2
-'US'
+>>> data.country.alpha2, data.prefix
+('US', 'QM')
+>>> data.agency
+'RIAA'
 >>> data = ISRC.parse('ZZZZZ1234567')
 >>> data.country.name
 'Worldwide'
 >>> data.country.alpha2
 ''
+>>> data.agency
+'International ISRC Registration Authority'
 ```
 
 `validate()` method is provided for simple validation:
@@ -67,11 +75,13 @@ In the _very rare_ case that no data validation is desired, it is possible to in
 'Some Owner123456789'
 ```
 
-In case ISRC prefix isn't a legal allocated prefix, `.country` property becomes `None`:
+In case ISRC prefix isn't a legal allocated prefix, `.country` and `.agency` properties become `None`:
 
 ```pycon
 >>> data = ISRC('ZYXWV', 12, 34567)  # Exception if using ISRC.parse()
 >>> type(data.country)
+<class 'NoneType'>
+>>> type(data.agency)
 <class 'NoneType'>
 ```
 

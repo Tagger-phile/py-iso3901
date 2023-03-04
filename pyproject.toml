@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
+requires = ["flit_core ~=3.2"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -49,3 +49,9 @@ packages = 'iso3901'
 strict = true
 show_error_context = true
 pretty = true
+
+[tool.isort]
+profile = 'black'
+combine_as_imports = true
+include_trailing_comma = true
+skip_glob = [".*", "tests/*"]

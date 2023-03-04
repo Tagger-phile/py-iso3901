@@ -1,5 +1,5 @@
 # py-iso3901
-Structured parsing of [International Standard Recording Code](https://isrc.ifpi.org/en/) (ISRC) in python, as defined in ISO 3901:2019.
+Structured parsing of ISRC ([International Standard Recording Code](https://isrc.ifpi.org/en/)) in python, as defined in ISO 3901:2019.
 
 ## Install
 
@@ -62,6 +62,26 @@ True
 False
 ```
 
+If desired, ISRC prefix allocation status and agency names can be accessed directly. They are exported directly as standard [`enum`](https://docs.python.org/3/library/enum.html):
+
+```pycon
+>>> from iso3901 import Agency, Allocation
+>>> Agency.DK
+<Agency.DK: 'GRAMEK DK'>
+>>> Agency.DK == Agency['DK']
+True
+>>> Allocation.DK
+<Allocation.DK: ......>
+>>> Allocation.DK.agency == Agency.DK
+True
+>>> Allocation['DK'].country
+Country(name='Denmark', alpha2='DK', alpha3='DNK', numeric='208', apolitical_name='Denmark')
+>>> Allocation['XY']
+Traceback (most recent call last):
+......
+KeyError: 'XY'
+```
+
 ## Caveats
 
 In the _very rare_ case that no data validation is desired, it is possible to initiate object directly. Be warned that supplying free form data would result in illegal ISRC code:
@@ -101,7 +121,7 @@ Following documents are consulted when writing code:
 
 2. _Why is the year kept as integer and not python `datetime` structure?_
 
-   In ISRC standard, only the last 2 digit of year is available. It is easier to tell the actual year in some cases, but for years like '20', it is impossible to distinguish 1920 from 2020 via ISRC alone. Acoustic recording already existed during 1920 era.
+   In ISRC standard, only the last 2 digit of year is available. It is easier to tell the actual year in some cases, but for years like '20', it is impossible to distinguish 1920 from 2020 via ISRC alone. Acoustic recording already existed around 1900; and some ancient recordings are known to directly use recording year (20's) in ISRC, such as [Jimmie Rodgers'](https://open.spotify.com/album/6TXhBKNTITmOTWCbHaQKIG).
 
 3. _The "country code" `QM` is already known for use in United States, and `ZZ` reserved for International ISRC Agency, as described in various ISRC Bulletins. Is there any plan to add modern ISRC Registrant allocations and do a mapping between newer prefixes and countries?_
 

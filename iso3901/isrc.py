@@ -14,10 +14,12 @@ __all__ = ("ISRC", "Agency", "Allocation")
 # Last updated: 2023-02-08
 #
 
+
 class Agency(str, enum.Enum):
     """Name of national or worldwide agency responsible for allocating
     ISRC prefixes
     """
+
     IIRA = "International ISRC Registration Authority"
     AR = "CAPIF"
     AT = "LSG"
@@ -76,8 +78,11 @@ class Agency(str, enum.Enum):
     ZA = "RISA"
 
     if TYPE_CHECKING:
+
         @property
-        def value(self) -> str: ...
+        def value(self) -> str:
+            ...
+
 
 #
 # Python ISO 3166 record eliminates all ceased countries,
@@ -86,6 +91,7 @@ class Agency(str, enum.Enum):
 #
 class PseudoCountry(iso3166.Country):
     """Ceased entities or non-countries used in ISO 3901"""
+
 
 _Yugoslavia = PseudoCountry(
     "Yugoslavia",
@@ -108,9 +114,11 @@ _SerbiaMontenegro = PseudoCountry(
 _Worldwide = PseudoCountry("Worldwide", "", "", "", "Worldwide")
 "Fake country indicating certain ISRC prefix is allocated worldwide"
 
+
 class _AllocationType(NamedTuple):
     agency: Agency
     country: iso3166.Country
+
 
 _alpha2 = iso3166.countries_by_alpha2
 
@@ -339,6 +347,7 @@ class Allocation(_AllocationType, enum.Enum):
     ZW = Agency.IIRA, _alpha2["ZW"]
 # fmt: on
 
+
 @dataclass(frozen=True)
 class ISRC:
     """Objectified ISRC structure defined in ISO 3901:2019
@@ -499,7 +508,7 @@ class ISRC:
         """
         owner, year, desig = cls._parse(_raw)
         result = cls(owner, year, desig)
-        object.__setattr__(result, 'raw', _raw)
+        object.__setattr__(result, "raw", _raw)
         return result
 
     @classmethod

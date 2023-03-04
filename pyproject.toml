@@ -27,8 +27,25 @@ dependencies = [
     "iso3166"
 ]
 
+[project.optional-dependencies]
+dev = [
+    'tox ~= 4.0',
+    'pytest',
+    'pyright',
+    'mypy ~= 1.0',
+]
+
 [project.urls]
 Home = "https://github.com/Tagger-phile/py-iso3901"
 
 [tool.pytest.ini_options]
 testpaths = ['tests']
+
+[tool.pyright]
+include = ['iso3901']
+
+[tool.mypy]
+packages = 'iso3901'
+strict = true
+show_error_context = true
+pretty = true

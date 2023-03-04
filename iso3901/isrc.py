@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import enum
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, NamedTuple, Optional, Tuple, Type
@@ -372,7 +374,7 @@ class ISRC:
     designation: int
     raw: Optional[str] = field(default=None, init=False, repr=False, compare=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.stringify(False)
 
     @property
@@ -384,7 +386,7 @@ class ISRC:
         try:
             alloc = Allocation[self.prefix]
         except KeyError:
-            return
+            return None
         return alloc.country
 
     @property
@@ -392,7 +394,7 @@ class ISRC:
         try:
             alloc = Allocation[self.prefix]
         except KeyError:
-            return
+            return None
         return alloc.agency.value
 
     def stringify(self, separator: bool = True) -> str:
@@ -460,7 +462,7 @@ class ISRC:
         return (country + owner, int(year), int(desig))
 
     @classmethod
-    def parse(cls: "Type[ISRC]", _raw: str) -> "ISRC":
+    def parse(cls: Type[ISRC], _raw: str) -> ISRC:
         """Parses ISRC string into structure
 
         It checks for ``CCOOOYYNNNNN`` or ``CC-OOO-YY-NNNNN`` pattern

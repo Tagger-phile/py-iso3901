@@ -1,0 +1,73 @@
+name: (Reuse) Formatting check
+
+on:
+  workflow_call:
+    inputs:
+      gitref:
+        required: true
+        type: string
+      pull_request:
+        required: true
+        type: boolean
+      os:
+        required: false
+        type: string
+        default: 'ubuntu-22.04'
+      pyver:
+        required: false
+        type: string
+        default: '3.11'
+
+jobs:
+  format:
+    runs-on: ${{ inputs.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.gitref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.pyver }}
+
+      - name: Install python packages
+        run: >
+          pip install --progress-bar off
+          pytest
+          iso3166
+
+      - name: Black action
+        uses: rickstaa/action-black@v1
+        with:
+          black_args: '.'
+
+      - name: Isort action
+        uses: isort/isort-action@v1
+        with:
+          configuration: ''
+
+      - name: Check dirty git tree
+        id: check_dirty
+        run: git diff-index --exit-code ${{ inputs.gitref }}
+
+        # upstream workflow requires both permissions:
+        # {pull-requests: write, contents: write}
+      - name: Create pull request
+        if: >-
+          failure()
+          && steps.check_dirty.conclusion == 'failure'
+          && inputs.pull_request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: create-pull-request/format
+          delete-branch: true
+          title: 'Black/isort formatting changes'
+          commit-message: 'chore: automated black/isort formatting'
+          labels: bot
+          author: 'github-action[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+          body: >
+            Automated formatting on ${{ inputs.gitref }} by
+            [action-black](https://github.com/rickstaa/action-black),
+            [isort-action](https://github.com/isort/isort-action) and
+            [create-pull-request](https://github.com/peter-evans/create-pull-request)

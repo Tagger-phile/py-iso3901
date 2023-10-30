@@ -42,6 +42,7 @@ testpaths = ['tests']
 
 [tool.pyright]
 include = ['iso3901']
+typeCheckingMode = 'strict'
 
 [tool.mypy]
 packages = 'iso3901'
@@ -53,4 +54,4 @@ pretty = true
 profile = 'black'
 combine_as_imports = true
 include_trailing_comma = true
-skip_glob = [".*", "tests/*"]
+skip_glob = [".*"]

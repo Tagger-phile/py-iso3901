@@ -7,6 +7,7 @@ name = "iso3901"
 authors = [{name = "Abel Cheung", email = "abelcheung@gmail.com"}]
 dynamic = ["version", "description"]
 readme = "README.md"
+keywords = ['isrc', 'recording', 'sound', 'metadata', 'ifpi']
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -18,20 +19,19 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Multimedia :: Sound/Audio",
     "Typing :: Typed",
 ]
 requires-python = ">=3.7"
 dependencies = [
-    "iso3166"
+    'iso3166 ~= 2.0'
 ]
 
 [project.optional-dependencies]
 dev = [
     'tox ~= 4.0',
-    'pytest',
-    'pyright',
-    'mypy ~= 1.0',
+    'flit ~= 3.2',
 ]
 
 [project.urls]

@@ -1,0 +1,36 @@
+name: (Reuse) Tox test
+
+on:
+  workflow_call:
+    inputs:
+      gitref:
+        required: true
+        type: string
+      os:
+        required: false
+        type: string
+        default: 'ubuntu-22.04'
+      pyver:
+        required: false
+        type: string
+        default: '3.11'
+
+jobs:
+  test:
+    runs-on: ${{ inputs.os }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.gitref }}
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.pyver }}
+
+    - name: Install dependencies
+      run: >
+        pip install --progress-bar off
+        tox-gh-actions>=3.1.3
+
+    - name: Test suite
+      run: tox run

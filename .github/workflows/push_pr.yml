@@ -1,0 +1,23 @@
+name: Automated Push/PR Check
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - '**.rst'
+      - 'LICENSE'
+      - '.*'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - '**.rst'
+      - 'LICENSE'
+      - '.*'
+
+jobs:
+  all_checks:
+    uses: ./.github/workflows/full_check_inc.yml
+    with:
+      gitref: ${{ github.ref }}

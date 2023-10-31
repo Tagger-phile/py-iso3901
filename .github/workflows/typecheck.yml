@@ -1,0 +1,21 @@
+name: Manual type check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        py:
+          - '3.7'
+          - '3.8'
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+    uses: ./.github/workflows/typecheck_inc.yml
+    with:
+      gitref: ${{ github.ref }}
+      pyver: ${{ matrix.py }}

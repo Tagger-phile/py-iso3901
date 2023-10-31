@@ -55,3 +55,27 @@ profile = 'black'
 combine_as_imports = true
 include_trailing_comma = true
 skip_glob = [".*"]
+
+[tool.semantic_release]
+# This is how things are set up in python-semantic-release action
+# docker image
+build_command = '/semantic-release/.venv/bin/pip install flit && flit build'
+commit_message = 'chore(release): bump version to {version}'
+version_variables = ['iso3901/__init__.py:__version__']
+
+[tool.semantic_release.commit_parser_options]
+allowed_tags = [
+    'build',
+    'chore',
+    'ci',
+    'docs',
+    'feat',
+    'fix',
+    'perf',
+    'refactor',
+    'revert',
+    'style',
+    'test',
+]
+minor_tags = ['feat']
+patch_tags = ['fix', 'perf']

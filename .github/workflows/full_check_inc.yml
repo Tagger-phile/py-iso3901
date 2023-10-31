@@ -1,0 +1,43 @@
+name: (Reuse) Full Check
+
+on:
+  workflow_call:
+    inputs:
+      gitref:
+        required: true
+        type: string
+
+jobs:
+  annotations:
+    strategy:
+      fail-fast: false
+      matrix:
+        py:
+          - '3.7'
+          - '3.8'
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+    uses: ./.github/workflows/typecheck_inc.yml
+    with:
+      gitref: ${{ inputs.gitref }}
+      pyver: ${{ matrix.py }}
+
+  pytests:
+    strategy:
+      fail-fast: false
+      matrix:
+        py:
+          - '3.7'
+          - '3.10'
+          - '3.12'
+        os:
+          - 'ubuntu-22.04'
+          - 'windows-2022'
+          - 'macos-12'
+    uses: ./.github/workflows/tox_inc.yml
+    with:
+      gitref: ${{ inputs.gitref }}
+      os: ${{ matrix.os }}
+      pyver: ${{ matrix.py }}

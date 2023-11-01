@@ -1,3 +1,5 @@
+#:schema https://json.schemastore.org/pyproject
+
 [build-system]
 requires = ["flit_core ~=3.2"]
 build-backend = "flit_core.buildapi"

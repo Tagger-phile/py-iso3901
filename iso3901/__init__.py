@@ -2,4 +2,4 @@
 
 from .isrc import ISRC as ISRC, Agency as Agency, Allocation as Allocation
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"

@@ -16,7 +16,8 @@ on:
         default: '3.11'
 
 jobs:
-  test:
+  pytest:
+    name: pytest ${{ inputs.pyver }}/${{ inputs.os }}
     runs-on: ${{ inputs.os }}
     steps:
     - uses: actions/checkout@v4

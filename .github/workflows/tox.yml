@@ -19,12 +19,9 @@ jobs:
     strategy:
       matrix:
         os:
-        - '3.7'
-        - '3.8'
-        - '3.9'
-        - '3.10'
-        - '3.11'
-        - '3.12'
+        - 'ubuntu-22.04'
+        - 'windows-2022'
+        - 'macos-12'
     uses: ./.github/workflows/tox_inc.yml
     with:
       gitref: ${{ github.ref }}

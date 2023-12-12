@@ -27,7 +27,7 @@ jobs:
           ref: ${{ inputs.gitref }}
           fetch-depth: 0
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.pyver }}
 

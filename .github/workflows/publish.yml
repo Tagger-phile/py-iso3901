@@ -44,7 +44,7 @@ jobs:
     # setup must be done inside docker action
 
     - name: Version bump is forced
-      uses: python-semantic-release/python-semantic-release@v8.5.1
+      uses: python-semantic-release/python-semantic-release@v8.7.2
       # How dare the github dev... &^$#%^%#@
       if: inputs.is_forced == 'true'
       id: forced
@@ -56,7 +56,7 @@ jobs:
         changelog: 'false'
 
     - name: Version bump is not forced
-      uses: python-semantic-release/python-semantic-release@v8.5.1
+      uses: python-semantic-release/python-semantic-release@v8.7.2
       if: inputs.is_forced == 'false'
       id: unforced
       with:

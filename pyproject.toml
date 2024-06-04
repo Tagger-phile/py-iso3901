@@ -81,3 +81,16 @@ allowed_tags = [
 ]
 minor_tags = ['feat']
 patch_tags = ['fix', 'perf']
+
+[tool.ruff.lint]
+select = ["I"]
+task-tags = [
+    "BUG",
+    "FIXME",
+    "HACK",
+    "TODO",
+    "XXX",
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true

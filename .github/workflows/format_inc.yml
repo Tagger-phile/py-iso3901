@@ -27,47 +27,45 @@ jobs:
           ref: ${{ inputs.gitref }}
           fetch-depth: 0
 
+      - name: Linting and import sort
+        uses: chartboost/ruff-action@v1
+        with:
+          args: 'check --fix'
+
+      - name: Code formatting
+        uses: chartboost/ruff-action@v1
+        with:
+          args: 'format'
+
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.pyver }}
+          cache: 'pip'
 
       - name: Install python packages
         run: >
-          pip install --progress-bar off
+          pip install --progress-bar=off
+          tox
           pytest
           iso3166
 
-      - name: Black action
-        uses: rickstaa/action-black@v1
-        with:
-          black_args: '.'
-
-      - name: Isort action
-        uses: isort/isort-action@v1
-        with:
-          configuration: ''
-
-      - name: Check dirty git tree
-        id: check_dirty
-        run: git diff-index --exit-code ${{ inputs.gitref }}
+      - name: Type checker validation on source
+        run: >
+          tox run-parallel
+          --parallel-no-spinner -v
+          -e mypy,pyright
 
         # upstream workflow requires both permissions:
         # {pull-requests: write, contents: write}
-      - name: Create pull request
-        if: >-
-          failure()
-          && steps.check_dirty.conclusion == 'failure'
-          && inputs.pull_request
-        uses: peter-evans/create-pull-request@v6
+      - uses: peter-evans/create-pull-request@v6
         with:
           branch: create-pull-request/format
           delete-branch: true
-          title: 'Black/isort formatting changes'
-          commit-message: 'chore: automated black/isort formatting'
+          title: 'Automated formatting changes'
+          commit-message: 'style: automated formatting'
           labels: bot
           author: 'github-action[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
           body: >
             Automated formatting on ${{ inputs.gitref }} by
-            [action-black](https://github.com/rickstaa/action-black),
-            [isort-action](https://github.com/isort/isort-action) and
+            [ruff-action](https://github.com/ChartBoost/ruff-action) and
             [create-pull-request](https://github.com/peter-evans/create-pull-request)

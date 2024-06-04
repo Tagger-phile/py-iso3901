@@ -2,7 +2,7 @@ name: Formatting
 
 on:
   schedule:
-    - cron: "40 5 * * 5"
+    - cron: "48 4 13 * *"
   workflow_dispatch:
 
 jobs:

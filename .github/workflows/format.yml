@@ -10,7 +10,6 @@ jobs:
     uses: ./.github/workflows/format_inc.yml
     with:
       gitref: ${{ github.ref }}
-      pull_request: true
     permissions:
       contents: write
       pull-requests: write

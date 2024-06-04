@@ -6,9 +6,6 @@ on:
       gitref:
         required: true
         type: string
-      pull_request:
-        required: true
-        type: boolean
       os:
         required: false
         type: string

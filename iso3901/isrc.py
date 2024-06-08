@@ -141,6 +141,7 @@ class Allocation(_AllocationType, enum.Enum):
     # to conclude if such confusion is intentional or an oversight.
     CP = Agency.IIRA, _Worldwide
     DG = Agency.IIRA, _Worldwide
+    QN = Agency.IIRA, _Worldwide
     ZZ = Agency.IIRA, _Worldwide
     TC = Agency.TC  , _Worldwide
 
@@ -163,6 +164,7 @@ class Allocation(_AllocationType, enum.Enum):
 
     # US
     QM = Agency.US  , _alpha2["US"]
+    QT = Agency.US  , _alpha2["US"]
     QZ = Agency.US  , _alpha2["US"]
     US = Agency.US  , _alpha2["US"]
 

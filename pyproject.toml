@@ -59,9 +59,13 @@ include_trailing_comma = true
 skip_glob = [".*"]
 
 [tool.semantic_release]
-# This is how things are set up in python-semantic-release action
-# docker image
-build_command = '/semantic-release/.venv/bin/pip install flit && flit build'
+# XXX Path is only valid for python-semantic-release
+# GitHub action docker image, and on specific action
+# version (e.g. in 9.3.0 the venv path is not /psr)
+build_command = """
+    test "$PSR_DOCKER_GITHUB_ACTION" == "true" && export PATH="/psr/.venv/bin:$PATH"
+    pip install flit && flit build
+"""
 commit_message = 'chore(release): bump version to {version}'
 version_variables = ['iso3901/__init__.py:__version__']
 
@@ -80,7 +84,7 @@ allowed_tags = [
     'test',
 ]
 minor_tags = ['feat']
-patch_tags = ['fix', 'perf']
+patch_tags = ['fix', 'perf', 'docs', 'chore']
 
 [tool.ruff.lint]
 select = ["I"]

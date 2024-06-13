@@ -80,8 +80,7 @@ class Agency(str, enum.Enum):
     if TYPE_CHECKING:
 
         @property
-        def value(self) -> str:
-            ...
+        def value(self) -> str: ...
 
 
 #
@@ -121,6 +120,7 @@ class _AllocationType(NamedTuple):
 
 
 _alpha2 = iso3166.countries_by_alpha2
+
 
 # fmt: off
 class Allocation(_AllocationType, enum.Enum):

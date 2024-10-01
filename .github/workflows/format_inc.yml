@@ -54,7 +54,7 @@ jobs:
 
         # upstream workflow requires both permissions:
         # {pull-requests: write, contents: write}
-      - uses: peter-evans/create-pull-request@v6
+      - uses: peter-evans/create-pull-request@v7
         with:
           branch: create-pull-request/format
           delete-branch: true

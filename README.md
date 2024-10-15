@@ -1,3 +1,7 @@
+[![PyPI version](https://img.shields.io/pypi/v/iso3901.svg)](https://pypi.org/project/iso3901/)
+![Supported Python](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fgithub.com%2FTagger-phile%2Fpy-iso3901%2Fraw%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)
+![Wheel](https://img.shields.io/pypi/wheel/iso3901.svg)
+
 # py-iso3901
 Structured parsing of ISRC ([International Standard Recording Code](https://isrc.ifpi.org/en/)) in python, as defined in ISO 3901:2019.
 

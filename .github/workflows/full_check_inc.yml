@@ -19,6 +19,7 @@ jobs:
           - '3.10'
           - '3.11'
           - '3.12'
+          - '3.13'
     uses: ./.github/workflows/typecheck_inc.yml
     with:
       gitref: ${{ inputs.gitref }}
@@ -32,6 +33,7 @@ jobs:
           - '3.7'
           - '3.10'
           - '3.12'
+          - '3.13'
         os:
           - 'ubuntu-22.04'
           - 'windows-2022'

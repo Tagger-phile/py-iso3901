@@ -33,6 +33,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      attestations: write
     runs-on: ubuntu-22.04
     environment: pypi
     steps:
@@ -45,7 +46,6 @@ jobs:
 
     - name: Version bump is forced
       uses: python-semantic-release/python-semantic-release@v9.9.0
-      # How dare the github dev... &^$#%^%#@
       if: inputs.is_forced == 'true'
       id: forced
       with:
@@ -65,11 +65,13 @@ jobs:
         git_committer_email: '41898282+github-actions[bot]@users.noreply.github.com'
         changelog: 'false'
 
-    - uses: pypa/gh-action-pypi-publish@release/v1
+    - uses: pypa/gh-action-pypi-publish@v1.10.3
       id: pypi_publish
       if: >-
         (steps.forced.conclusion == 'success' && steps.forced.outputs.released == 'true') ||
         (steps.unforced.conclusion == 'success' && steps.unforced.outputs.released == 'true')
+      with:
+        attestations: true
 
     - uses: python-semantic-release/upload-to-gh-release@main
       if: steps.pypi_publish.conclusion == 'success'

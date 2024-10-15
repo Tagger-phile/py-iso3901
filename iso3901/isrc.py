@@ -424,14 +424,12 @@ class ISRC:
             Resulting ISRC string
         """
         sep = "-" if separator else ""
-        return sep.join(
-            [
-                self.owner[:2],
-                self.owner[2:],
-                "{:02d}".format(self.year),
-                "{:05d}".format(self.designation),
-            ]
-        )
+        return sep.join([
+            self.owner[:2],
+            self.owner[2:],
+            "{:02d}".format(self.year),
+            "{:05d}".format(self.designation),
+        ])
 
     @classmethod
     def _parse(cls, _raw: str) -> Tuple[str, int, int]:

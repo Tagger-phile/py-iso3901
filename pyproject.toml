@@ -96,5 +96,8 @@ task-tags = [
     "XXX",
 ]
 
+[tool.ruff.format]
+preview = true
+
 [tool.ruff.lint.isort]
 combine-as-imports = true

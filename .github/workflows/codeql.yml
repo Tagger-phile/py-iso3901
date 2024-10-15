@@ -14,8 +14,14 @@ name: "CodeQL"
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**/*.py'
+      - '.github/workflows/codeql.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - '**/*.py'
+      - '.github/workflows/codeql.yml'
   schedule:
     - cron: '23 16 14 * *'
 

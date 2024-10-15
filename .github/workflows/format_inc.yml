@@ -61,7 +61,7 @@ jobs:
           title: 'Automated formatting changes'
           commit-message: 'style: automated formatting'
           labels: bot
-          author: 'github-action[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+          sign-commits: true
           body: >
             Automated formatting on ${{ inputs.gitref }} by
             [ruff-action](https://github.com/ChartBoost/ruff-action) and

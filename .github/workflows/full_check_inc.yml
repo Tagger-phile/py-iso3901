@@ -35,9 +35,9 @@ jobs:
           - '3.12'
           - '3.13'
         os:
-          - 'ubuntu-22.04'
+          - 'ubuntu-24.04'
           - 'windows-2022'
-          - 'macos-12'
+          - 'macos-14'
     uses: ./.github/workflows/tox_inc.yml
     with:
       gitref: ${{ inputs.gitref }}

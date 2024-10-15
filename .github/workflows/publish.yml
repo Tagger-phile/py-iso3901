@@ -70,10 +70,12 @@ jobs:
       if: >-
         (steps.forced.conclusion == 'success' && steps.forced.outputs.released == 'true') ||
         (steps.unforced.conclusion == 'success' && steps.unforced.outputs.released == 'true')
+
+    - uses: actions/attest-build-provenance@v1
+      if: steps.pypi_publish.conclusion == 'success'
       with:
-        attestations: true
+        subject-path: "dist/*"
 
     - uses: python-semantic-release/upload-to-gh-release@main
-      if: steps.pypi_publish.conclusion == 'success'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

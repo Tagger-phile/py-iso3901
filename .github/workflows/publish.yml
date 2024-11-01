@@ -65,7 +65,7 @@ jobs:
         git_committer_email: '41898282+github-actions[bot]@users.noreply.github.com'
         changelog: 'false'
 
-    - uses: pypa/gh-action-pypi-publish@v1.10.3
+    - uses: pypa/gh-action-pypi-publish@v1.11.0
       id: pypi_publish
       if: >-
         (steps.forced.conclusion == 'success' && steps.forced.outputs.released == 'true') ||

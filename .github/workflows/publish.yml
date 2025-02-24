@@ -71,7 +71,7 @@ jobs:
         (steps.forced.conclusion == 'success' && steps.forced.outputs.released == 'true') ||
         (steps.unforced.conclusion == 'success' && steps.unforced.outputs.released == 'true')
 
-    - uses: actions/attest-build-provenance@v1
+    - uses: actions/attest-build-provenance@v2
       if: steps.pypi_publish.conclusion == 'success'
       with:
         subject-path: "dist/*"

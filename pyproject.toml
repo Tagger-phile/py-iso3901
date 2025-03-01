@@ -11,7 +11,7 @@ dynamic = ["version", "description"]
 readme = "README.md"
 keywords = ['isrc', 'recording', 'sound', 'metadata', 'ifpi']
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",

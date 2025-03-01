@@ -31,6 +31,14 @@ def test_prop_prefix():
     assert isrc.prefix == code[:2]
 
 
+def test_prop_retired():
+    code = "ZZ-ZZZ-12-34567"
+    isrc = ISRC.parse(code)
+    assert not isrc.prefix_retired
+    code = "IM-ABC-12-34567"
+    isrc = ISRC.parse(code)
+    assert isrc.prefix_retired
+
 def test_prop_country():
     code = "ISRC ZZ-ZZZ-12-34567"
     isrc = ISRC.parse(code)

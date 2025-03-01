@@ -48,6 +48,8 @@ ISRC agency prefix validation is now supported since version `0.3.0`:
 ('US', 'QM')
 >>> data.agency
 'RIAA'
+>>> data.prefix_retired
+False
 >>> data = ISRC.parse('ZZZZZ1234567')
 >>> data.country.name
 'Worldwide'

@@ -118,7 +118,7 @@ _Worldwide = PseudoCountry("Worldwide", "", "", "", "Worldwide")
 class _AllocationType(NamedTuple):
     agency: Agency
     country: iso3166.Country
-
+    prefix_retired: bool
 
 _alpha2 = iso3166.countries_by_alpha2
 
@@ -140,252 +140,252 @@ class Allocation(_AllocationType, enum.Enum):
     # and moved potential uses of Turks and Caicos Islands under one
     # of IIRA's own reserved prefix ("DG"). There is not enough info
     # to conclude if such confusion is intentional or an oversight.
-    CP = Agency.IIRA, _Worldwide
-    DG = Agency.IIRA, _Worldwide
-    QN = Agency.IIRA, _Worldwide
-    ZZ = Agency.IIRA, _Worldwide
-    TC = Agency.TC  , _Worldwide
+    CP = Agency.IIRA, _Worldwide, False
+    DG = Agency.IIRA, _Worldwide, False
+    QN = Agency.IIRA, _Worldwide, False  # 2024-06
+    ZZ = Agency.IIRA, _Worldwide, False
+    TC = Agency.TC  , _Worldwide, False
 
     # Brazil
-    BC = Agency.BR  , _alpha2["BR"]
-    BK = Agency.BR  , _alpha2["BR"]
-    BP = Agency.BR  , _alpha2["BR"]
-    BR = Agency.BR  , _alpha2["BR"]
-    BX = Agency.BR  , _alpha2["BR"]
+    BC = Agency.BR  , _alpha2["BR"], False
+    BK = Agency.BR  , _alpha2["BR"], False
+    BP = Agency.BR  , _alpha2["BR"], False
+    BR = Agency.BR  , _alpha2["BR"], False
+    BX = Agency.BR  , _alpha2["BR"], False
 
     # Denmark
-    DK = Agency.DK  , _alpha2["DK"]
-    FO = Agency.DK  , _alpha2["DK"]
-    GL = Agency.DK  , _alpha2["DK"]
+    DK = Agency.DK  , _alpha2["DK"], False
+    FO = Agency.DK  , _alpha2["DK"], False
+    GL = Agency.DK  , _alpha2["DK"], False
 
     # UK
-    GB = Agency.GB  , _alpha2["GB"]
-    GX = Agency.GB  , _alpha2["GB"]
-    UK = Agency.GB  , _alpha2["GB"]
+    GB = Agency.GB  , _alpha2["GB"], False
+    GX = Agency.GB  , _alpha2["GB"], False
+    UK = Agency.GB  , _alpha2["GB"], False
 
     # US
-    QM = Agency.US  , _alpha2["US"]
-    QT = Agency.US  , _alpha2["US"]
-    QZ = Agency.US  , _alpha2["US"]
-    US = Agency.US  , _alpha2["US"]
+    QM = Agency.US  , _alpha2["US"], False
+    QT = Agency.US  , _alpha2["US"], False  # 2024-06
+    QZ = Agency.US  , _alpha2["US"], False
+    US = Agency.US  , _alpha2["US"], False
 
     # Canada
-    CA = Agency.CA  , _alpha2["CA"]
-    CB = Agency.CA  , _alpha2["CA"]
+    CA = Agency.CA  , _alpha2["CA"], False
+    CB = Agency.CA  , _alpha2["CA"], False
 
     # France
-    FR = Agency.FR  , _alpha2["FR"]
-    FX = Agency.FR  , _alpha2["FR"]
+    FR = Agency.FR  , _alpha2["FR"], False
+    FX = Agency.FR  , _alpha2["FR"], False
 
     # South Africa
-    ZA = Agency.ZA  , _alpha2["ZA"]
-    ZB = Agency.ZA  , _alpha2["ZA"]
+    ZA = Agency.ZA  , _alpha2["ZA"], False
+    ZB = Agency.ZA  , _alpha2["ZA"], False
 
     # South Korea
-    KR = Agency.KR  , _alpha2["KR"]
-    KS = Agency.KR  , _alpha2["KR"]
+    KR = Agency.KR  , _alpha2["KR"], False
+    KS = Agency.KR  , _alpha2["KR"], False
 
     # Belgium, Luxembourg
-    BE = Agency.BE  , _alpha2["BE"]
-    LU = Agency.BE  , _alpha2["LU"]
+    BE = Agency.BE  , _alpha2["BE"], False
+    LU = Agency.BE  , _alpha2["LU"], False
 
     # New Zealand, Fiji, Tonga
-    FJ = Agency.NZ  , _alpha2["FJ"]
-    NZ = Agency.NZ  , _alpha2["NZ"]
-    TO = Agency.NZ  , _alpha2["TO"]
+    FJ = Agency.NZ  , _alpha2["FJ"], False
+    NZ = Agency.NZ  , _alpha2["NZ"], False
+    TO = Agency.NZ  , _alpha2["TO"], False
 
     # Switzerland, Liechtenstein
-    CH = Agency.CH  , _alpha2["CH"]
-    LI = Agency.CH  , _alpha2["LI"]
+    CH = Agency.CH  , _alpha2["CH"], False
+    LI = Agency.CH  , _alpha2["LI"], False
 
     # Obsolete
-    PR = Agency.IIRA, _alpha2["PR"]  # Puerto Rico, now managed under US
-    CS = Agency.IIRA, _SerbiaMontenegro
-    IM = Agency.IIRA, _alpha2["IM"]  # Isle of Mann  # 2024-12
-    YU = Agency.IIRA, _Yugoslavia
+    PR = Agency.IIRA, _alpha2["PR"], True  # Puerto Rico, now managed under US
+    CS = Agency.IIRA, _SerbiaMontenegro, True
+    IM = Agency.IIRA, _alpha2["IM"], True  # Isle of Mann  # 2024-12
+    YU = Agency.IIRA, _Yugoslavia, True
 
     # Other Existing entries
-    AD = Agency.IIRA, _alpha2["AD"]
-    AE = Agency.IIRA, _alpha2["AE"]
-    AF = Agency.IIRA, _alpha2["AF"]  # 2024-12
-    AG = Agency.IIRA, _alpha2["AG"]
-    AI = Agency.IIRA, _alpha2["AI"]
-    AL = Agency.IIRA, _alpha2["AL"]
-    AM = Agency.IIRA, _alpha2["AM"]
-    AO = Agency.IIRA, _alpha2["AO"]
-    AR = Agency.AR  , _alpha2["AR"]
-    AT = Agency.AT  , _alpha2["AT"]
-    AU = Agency.AU  , _alpha2["AU"]
-    AW = Agency.IIRA, _alpha2["AW"]
-    AZ = Agency.IIRA, _alpha2["AZ"]
-    BA = Agency.IIRA, _alpha2["BA"]
-    BB = Agency.BB  , _alpha2["BB"]
-    BD = Agency.IIRA, _alpha2["BD"]
-    BF = Agency.IIRA, _alpha2["BF"]
-    BG = Agency.IIRA, _alpha2["BG"]
-    BH = Agency.IIRA, _alpha2["BH"]
-    BI = Agency.IIRA, _alpha2["BI"]  # 2024-12
-    BJ = Agency.IIRA, _alpha2["BJ"]  # 2024-12
-    BM = Agency.IIRA, _alpha2["BM"]
-    BN = Agency.IIRA, _alpha2["BN"]  # 2024-12
-    BO = Agency.IIRA, _alpha2["BO"]
-    BS = Agency.IIRA, _alpha2["BS"]
-    BW = Agency.BW  , _alpha2["BW"]  # 2024-12
-    BY = Agency.IIRA, _alpha2["BY"]
-    BZ = Agency.IIRA, _alpha2["BZ"]
-    CD = Agency.IIRA, _alpha2["CD"]
-    CF = Agency.IIRA, _alpha2["CF"]  # 2024-12
-    CG = Agency.IIRA, _alpha2["CG"]  # 2024-12
-    CI = Agency.IIRA, _alpha2["CI"]
-    CL = Agency.CL  , _alpha2["CL"]
-    CM = Agency.IIRA, _alpha2["CM"]
-    CN = Agency.IIRA, _alpha2["CN"]
-    CO = Agency.IIRA, _alpha2["CO"]
-    CU = Agency.IIRA, _alpha2["CU"]
-    CV = Agency.IIRA, _alpha2["CV"]  # 2024-12
-    CW = Agency.IIRA, _alpha2["CW"]
-    CY = Agency.IIRA, _alpha2["CY"]
-    CZ = Agency.CZ  , _alpha2["CZ"]
-    DE = Agency.DE  , _alpha2["DE"]
-    DM = Agency.IIRA, _alpha2["DM"]
-    DO = Agency.DO  , _alpha2["DO"]
-    DZ = Agency.IIRA, _alpha2["DZ"]
-    EC = Agency.IIRA, _alpha2["EC"]
-    EE = Agency.EE  , _alpha2["EE"]
-    EG = Agency.IIRA, _alpha2["EG"]
-    ES = Agency.ES  , _alpha2["ES"]
-    ET = Agency.IIRA, _alpha2["ET"]
-    FI = Agency.FI  , _alpha2["FI"]
-    GA = Agency.IIRA, _alpha2["GA"]  # 2024-12
-    GD = Agency.IIRA, _alpha2["GD"]
-    GE = Agency.IIRA, _alpha2["GE"]
-    GG = Agency.IIRA, _alpha2["GG"]
-    GH = Agency.IIRA, _alpha2["GH"]
-    GI = Agency.IIRA, _alpha2["GI"]
-    GM = Agency.IIRA, _alpha2["GM"]
-    GN = Agency.IIRA, _alpha2["GN"]  # 2024-12
-    GQ = Agency.IIRA, _alpha2["GQ"]  # 2024-12
-    GR = Agency.GR  , _alpha2["GR"]
-    GT = Agency.IIRA, _alpha2["GT"]
-    GW = Agency.IIRA, _alpha2["GW"]  # 2024-12
-    GY = Agency.IIRA, _alpha2["GY"]
-    HK = Agency.HK  , _alpha2["HK"]
-    HN = Agency.IIRA, _alpha2["HN"]
-    HR = Agency.IIRA, _alpha2["HR"]
-    HT = Agency.IIRA, _alpha2["HT"]
-    HU = Agency.IIRA, _alpha2["HU"]
-    ID = Agency.ID  , _alpha2["ID"]
-    IE = Agency.IE  , _alpha2["IE"]
-    IL = Agency.IL  , _alpha2["IL"]
-    IN = Agency.IN  , _alpha2["IN"]
-    IQ = Agency.IIRA, _alpha2["IQ"]
-    IR = Agency.IIRA, _alpha2["IR"]
-    IS = Agency.IS  , _alpha2["IS"]
-    IT = Agency.IT  , _alpha2["IT"]
-    JE = Agency.IIRA, _alpha2["JE"]
-    JM = Agency.JM  , _alpha2["JM"]
-    JO = Agency.IIRA, _alpha2["JO"]
-    JP = Agency.JP  , _alpha2["JP"]
-    KE = Agency.IIRA, _alpha2["KE"]
-    KG = Agency.IIRA, _alpha2["KG"]  # 2024-12
-    KH = Agency.IIRA, _alpha2["KH"]  # 2024-12
-    KM = Agency.IIRA, _alpha2["KM"]  # 2024-12
-    KN = Agency.IIRA, _alpha2["KN"]
-    KW = Agency.IIRA, _alpha2["KW"]  # 2024-12
-    KY = Agency.IIRA, _alpha2["KY"]
-    KZ = Agency.IIRA, _alpha2["KZ"]
-    LA = Agency.IIRA, _alpha2["LA"]
-    LB = Agency.IIRA, _alpha2["LB"]
-    LC = Agency.IIRA, _alpha2["LC"]
-    LK = Agency.IIRA, _alpha2["LK"]
-    LR = Agency.IIRA, _alpha2["LR"]  # 2024-12
-    LS = Agency.IIRA, _alpha2["LS"]
-    LT = Agency.LT  , _alpha2["LT"]
-    LV = Agency.LV  , _alpha2["LV"]
-    MA = Agency.IIRA, _alpha2["MA"]
-    MC = Agency.IIRA, _alpha2["MC"]
-    MD = Agency.IIRA, _alpha2["MD"]
-    ME = Agency.IIRA, _alpha2["ME"]
-    MF = Agency.IIRA, _alpha2["MF"]  # 2024-12
-    MG = Agency.IIRA, _alpha2["MG"]  # 2024-12
-    MK = Agency.IIRA, _alpha2["MK"]
-    ML = Agency.IIRA, _alpha2["ML"]  # 2024-12
-    MM = Agency.IIRA, _alpha2["MM"]  # 2024-12
-    MN = Agency.IIRA, _alpha2["MN"]  # 2024-12
-    MO = Agency.IIRA, _alpha2["MO"]
-    MP = Agency.IIRA, _alpha2["MP"]
-    MR = Agency.IIRA, _alpha2["MR"]  # 2024-12
-    MS = Agency.IIRA, _alpha2["MS"]
-    MT = Agency.IIRA, _alpha2["MT"]
-    MU = Agency.IIRA, _alpha2["MU"]
-    MV = Agency.IIRA, _alpha2["MV"]
-    MW = Agency.IIRA, _alpha2["MW"]
-    MX = Agency.MX  , _alpha2["MX"]
-    MY = Agency.MY  , _alpha2["MY"]
-    MZ = Agency.IIRA, _alpha2["MZ"]
-    NA = Agency.IIRA, _alpha2["NA"]
-    NE = Agency.IIRA, _alpha2["NE"]  # 2024-12
-    NG = Agency.IIRA, _alpha2["NG"]
-    NI = Agency.IIRA, _alpha2["NI"]  # 2024-12
-    NL = Agency.NL  , _alpha2["NL"]
-    NO = Agency.NO  , _alpha2["NO"]
-    NP = Agency.IIRA, _alpha2["NP"]
-    OM = Agency.IIRA, _alpha2["OM"]  # 2024-12
-    PA = Agency.PA  , _alpha2["PA"]
-    PE = Agency.PE  , _alpha2["PE"]
-    PF = Agency.IIRA, _alpha2["PF"]
-    PG = Agency.IIRA, _alpha2["PG"]
-    PH = Agency.PH  , _alpha2["PH"]
-    PK = Agency.IIRA, _alpha2["PK"]
-    PL = Agency.PL  , _alpha2["PL"]
-    PS = Agency.IIRA, _alpha2["PS"]  # 2024-12
-    PT = Agency.PT  , _alpha2["PT"]
-    PY = Agency.PY  , _alpha2["PY"]
-    QA = Agency.IIRA, _alpha2["QA"]
-    RO = Agency.RO  , _alpha2["RO"]
-    RS = Agency.IIRA, _alpha2["RS"]
-    RU = Agency.IIRA, _alpha2["RU"]
-    RW = Agency.IIRA, _alpha2["RW"]  # 2024-12
-    SA = Agency.IIRA, _alpha2["SA"]
-    SB = Agency.IIRA, _alpha2["SB"]
-    SC = Agency.IIRA, _alpha2["SC"]
-    SD = Agency.IIRA, _alpha2["SD"]  # 2024-12
-    SE = Agency.SE  , _alpha2["SE"]
-    SG = Agency.SG  , _alpha2["SG"]
-    SI = Agency.IIRA, _alpha2["SI"]
-    SK = Agency.SK  , _alpha2["SK"]
-    SL = Agency.IIRA, _alpha2["SL"]
-    SM = Agency.IIRA, _alpha2["SM"]
-    SN = Agency.IIRA, _alpha2["SN"]
-    SO = Agency.IIRA, _alpha2["SO"]  # 2024-12
-    SR = Agency.IIRA, _alpha2["SR"]  # 2024-12
-    SS = Agency.IIRA, _alpha2["SS"]  # 2024-12
-    SV = Agency.IIRA, _alpha2["SV"]
-    SX = Agency.IIRA, _alpha2["SX"]
-    SY = Agency.IIRA, _alpha2["SY"]  # 2024-12
-    SZ = Agency.IIRA, _alpha2["SZ"]
-    TD = Agency.IIRA, _alpha2["TD"]  # 2024-12
-    TG = Agency.IIRA, _alpha2["TG"]  # 2024-12
-    TH = Agency.TH  , _alpha2["TH"]
-    TL = Agency.IIRA, _alpha2["TL"]  # 2024-12
-    TN = Agency.IIRA, _alpha2["TN"]
-    TR = Agency.TR  , _alpha2["TR"]
-    TT = Agency.TT  , _alpha2["TT"]
-    TW = Agency.TW  , _alpha2["TW"]
-    TZ = Agency.IIRA, _alpha2["TZ"]
-    UA = Agency.UA  , _alpha2["UA"]
-    UG = Agency.IIRA, _alpha2["UG"]
-    UY = Agency.UY  , _alpha2["UY"]
-    UZ = Agency.IIRA, _alpha2["UZ"]
-    VC = Agency.IIRA, _alpha2["VC"]
-    VE = Agency.IIRA, _alpha2["VE"]
-    VG = Agency.IIRA, _alpha2["VG"]
-    VN = Agency.IIRA, _alpha2["VN"]
-    VU = Agency.IIRA, _alpha2["VU"]
-    XK = Agency.IIRA, _alpha2["XK"]
-    YE = Agency.IIRA, _alpha2["YE"]  # 2024-12
-    ZM = Agency.IIRA, _alpha2["ZM"]
-    ZW = Agency.IIRA, _alpha2["ZW"]
+    AD = Agency.IIRA, _alpha2["AD"], False
+    AE = Agency.IIRA, _alpha2["AE"], False
+    AF = Agency.IIRA, _alpha2["AF"], False  # 2024-12
+    AG = Agency.IIRA, _alpha2["AG"], False
+    AI = Agency.IIRA, _alpha2["AI"], False
+    AL = Agency.IIRA, _alpha2["AL"], False
+    AM = Agency.IIRA, _alpha2["AM"], False
+    AO = Agency.IIRA, _alpha2["AO"], False
+    AR = Agency.AR  , _alpha2["AR"], False
+    AT = Agency.AT  , _alpha2["AT"], False
+    AU = Agency.AU  , _alpha2["AU"], False
+    AW = Agency.IIRA, _alpha2["AW"], False
+    AZ = Agency.IIRA, _alpha2["AZ"], False
+    BA = Agency.IIRA, _alpha2["BA"], False
+    BB = Agency.BB  , _alpha2["BB"], False
+    BD = Agency.IIRA, _alpha2["BD"], False
+    BF = Agency.IIRA, _alpha2["BF"], False
+    BG = Agency.IIRA, _alpha2["BG"], False
+    BH = Agency.IIRA, _alpha2["BH"], False
+    BI = Agency.IIRA, _alpha2["BI"], False  # 2024-12
+    BJ = Agency.IIRA, _alpha2["BJ"], False  # 2024-12
+    BM = Agency.IIRA, _alpha2["BM"], False
+    BN = Agency.IIRA, _alpha2["BN"], False  # 2024-12
+    BO = Agency.IIRA, _alpha2["BO"], False
+    BS = Agency.IIRA, _alpha2["BS"], False
+    BW = Agency.BW  , _alpha2["BW"], False  # 2024-12
+    BY = Agency.IIRA, _alpha2["BY"], False
+    BZ = Agency.IIRA, _alpha2["BZ"], False
+    CD = Agency.IIRA, _alpha2["CD"], False
+    CF = Agency.IIRA, _alpha2["CF"], False  # 2024-12
+    CG = Agency.IIRA, _alpha2["CG"], False  # 2024-12
+    CI = Agency.IIRA, _alpha2["CI"], False
+    CL = Agency.CL  , _alpha2["CL"], False
+    CM = Agency.IIRA, _alpha2["CM"], False
+    CN = Agency.IIRA, _alpha2["CN"], False
+    CO = Agency.IIRA, _alpha2["CO"], False
+    CU = Agency.IIRA, _alpha2["CU"], False
+    CV = Agency.IIRA, _alpha2["CV"], False  # 2024-12
+    CW = Agency.IIRA, _alpha2["CW"], False
+    CY = Agency.IIRA, _alpha2["CY"], False
+    CZ = Agency.CZ  , _alpha2["CZ"], False
+    DE = Agency.DE  , _alpha2["DE"], False
+    DM = Agency.IIRA, _alpha2["DM"], False
+    DO = Agency.DO  , _alpha2["DO"], False
+    DZ = Agency.IIRA, _alpha2["DZ"], False
+    EC = Agency.IIRA, _alpha2["EC"], False
+    EE = Agency.EE  , _alpha2["EE"], False
+    EG = Agency.IIRA, _alpha2["EG"], False
+    ES = Agency.ES  , _alpha2["ES"], False
+    ET = Agency.IIRA, _alpha2["ET"], False
+    FI = Agency.FI  , _alpha2["FI"], False
+    GA = Agency.IIRA, _alpha2["GA"], False  # 2024-12
+    GD = Agency.IIRA, _alpha2["GD"], False
+    GE = Agency.IIRA, _alpha2["GE"], False
+    GG = Agency.IIRA, _alpha2["GG"], False
+    GH = Agency.IIRA, _alpha2["GH"], False
+    GI = Agency.IIRA, _alpha2["GI"], False
+    GM = Agency.IIRA, _alpha2["GM"], False
+    GN = Agency.IIRA, _alpha2["GN"], False  # 2024-12
+    GQ = Agency.IIRA, _alpha2["GQ"], False  # 2024-12
+    GR = Agency.GR  , _alpha2["GR"], False
+    GT = Agency.IIRA, _alpha2["GT"], False
+    GW = Agency.IIRA, _alpha2["GW"], False  # 2024-12
+    GY = Agency.IIRA, _alpha2["GY"], False
+    HK = Agency.HK  , _alpha2["HK"], False
+    HN = Agency.IIRA, _alpha2["HN"], False
+    HR = Agency.IIRA, _alpha2["HR"], False
+    HT = Agency.IIRA, _alpha2["HT"], False
+    HU = Agency.IIRA, _alpha2["HU"], False
+    ID = Agency.ID  , _alpha2["ID"], False
+    IE = Agency.IE  , _alpha2["IE"], False
+    IL = Agency.IL  , _alpha2["IL"], False
+    IN = Agency.IN  , _alpha2["IN"], False
+    IQ = Agency.IIRA, _alpha2["IQ"], False
+    IR = Agency.IIRA, _alpha2["IR"], False
+    IS = Agency.IS  , _alpha2["IS"], False
+    IT = Agency.IT  , _alpha2["IT"], False
+    JE = Agency.IIRA, _alpha2["JE"], False
+    JM = Agency.JM  , _alpha2["JM"], False
+    JO = Agency.IIRA, _alpha2["JO"], False
+    JP = Agency.JP  , _alpha2["JP"], False
+    KE = Agency.IIRA, _alpha2["KE"], False
+    KG = Agency.IIRA, _alpha2["KG"], False  # 2024-12
+    KH = Agency.IIRA, _alpha2["KH"], False  # 2024-12
+    KM = Agency.IIRA, _alpha2["KM"], False  # 2024-12
+    KN = Agency.IIRA, _alpha2["KN"], False
+    KW = Agency.IIRA, _alpha2["KW"], False  # 2024-12
+    KY = Agency.IIRA, _alpha2["KY"], False
+    KZ = Agency.IIRA, _alpha2["KZ"], False
+    LA = Agency.IIRA, _alpha2["LA"], False
+    LB = Agency.IIRA, _alpha2["LB"], False
+    LC = Agency.IIRA, _alpha2["LC"], False
+    LK = Agency.IIRA, _alpha2["LK"], False
+    LR = Agency.IIRA, _alpha2["LR"], False  # 2024-12
+    LS = Agency.IIRA, _alpha2["LS"], False
+    LT = Agency.LT  , _alpha2["LT"], False
+    LV = Agency.LV  , _alpha2["LV"], False
+    MA = Agency.IIRA, _alpha2["MA"], False
+    MC = Agency.IIRA, _alpha2["MC"], False
+    MD = Agency.IIRA, _alpha2["MD"], False
+    ME = Agency.IIRA, _alpha2["ME"], False
+    MF = Agency.IIRA, _alpha2["MF"], False  # 2024-12
+    MG = Agency.IIRA, _alpha2["MG"], False  # 2024-12
+    MK = Agency.IIRA, _alpha2["MK"], False
+    ML = Agency.IIRA, _alpha2["ML"], False  # 2024-12
+    MM = Agency.IIRA, _alpha2["MM"], False  # 2024-12
+    MN = Agency.IIRA, _alpha2["MN"], False  # 2024-12
+    MO = Agency.IIRA, _alpha2["MO"], False
+    MP = Agency.IIRA, _alpha2["MP"], False
+    MR = Agency.IIRA, _alpha2["MR"], False  # 2024-12
+    MS = Agency.IIRA, _alpha2["MS"], False
+    MT = Agency.IIRA, _alpha2["MT"], False
+    MU = Agency.IIRA, _alpha2["MU"], False
+    MV = Agency.IIRA, _alpha2["MV"], False
+    MW = Agency.IIRA, _alpha2["MW"], False
+    MX = Agency.MX  , _alpha2["MX"], False
+    MY = Agency.MY  , _alpha2["MY"], False
+    MZ = Agency.IIRA, _alpha2["MZ"], False
+    NA = Agency.IIRA, _alpha2["NA"], False
+    NE = Agency.IIRA, _alpha2["NE"], False  # 2024-12
+    NG = Agency.IIRA, _alpha2["NG"], False
+    NI = Agency.IIRA, _alpha2["NI"], False  # 2024-12
+    NL = Agency.NL  , _alpha2["NL"], False
+    NO = Agency.NO  , _alpha2["NO"], False
+    NP = Agency.IIRA, _alpha2["NP"], False
+    OM = Agency.IIRA, _alpha2["OM"], False  # 2024-12
+    PA = Agency.PA  , _alpha2["PA"], False
+    PE = Agency.PE  , _alpha2["PE"], False
+    PF = Agency.IIRA, _alpha2["PF"], False
+    PG = Agency.IIRA, _alpha2["PG"], False
+    PH = Agency.PH  , _alpha2["PH"], False
+    PK = Agency.IIRA, _alpha2["PK"], False
+    PL = Agency.PL  , _alpha2["PL"], False
+    PS = Agency.IIRA, _alpha2["PS"], False  # 2024-12
+    PT = Agency.PT  , _alpha2["PT"], False
+    PY = Agency.PY  , _alpha2["PY"], False
+    QA = Agency.IIRA, _alpha2["QA"], False
+    RO = Agency.RO  , _alpha2["RO"], False
+    RS = Agency.IIRA, _alpha2["RS"], False
+    RU = Agency.IIRA, _alpha2["RU"], False
+    RW = Agency.IIRA, _alpha2["RW"], False  # 2024-12
+    SA = Agency.IIRA, _alpha2["SA"], False
+    SB = Agency.IIRA, _alpha2["SB"], False
+    SC = Agency.IIRA, _alpha2["SC"], False
+    SD = Agency.IIRA, _alpha2["SD"], False  # 2024-12
+    SE = Agency.SE  , _alpha2["SE"], False
+    SG = Agency.SG  , _alpha2["SG"], False
+    SI = Agency.IIRA, _alpha2["SI"], False
+    SK = Agency.SK  , _alpha2["SK"], False
+    SL = Agency.IIRA, _alpha2["SL"], False
+    SM = Agency.IIRA, _alpha2["SM"], False
+    SN = Agency.IIRA, _alpha2["SN"], False
+    SO = Agency.IIRA, _alpha2["SO"], False  # 2024-12
+    SR = Agency.IIRA, _alpha2["SR"], False  # 2024-12
+    SS = Agency.IIRA, _alpha2["SS"], False  # 2024-12
+    SV = Agency.IIRA, _alpha2["SV"], False
+    SX = Agency.IIRA, _alpha2["SX"], False
+    SY = Agency.IIRA, _alpha2["SY"], False  # 2024-12
+    SZ = Agency.IIRA, _alpha2["SZ"], False
+    TD = Agency.IIRA, _alpha2["TD"], False  # 2024-12
+    TG = Agency.IIRA, _alpha2["TG"], False  # 2024-12
+    TH = Agency.TH  , _alpha2["TH"], False
+    TL = Agency.IIRA, _alpha2["TL"], False  # 2024-12
+    TN = Agency.IIRA, _alpha2["TN"], False
+    TR = Agency.TR  , _alpha2["TR"], False
+    TT = Agency.TT  , _alpha2["TT"], False
+    TW = Agency.TW  , _alpha2["TW"], False
+    TZ = Agency.IIRA, _alpha2["TZ"], False
+    UA = Agency.UA  , _alpha2["UA"], False
+    UG = Agency.IIRA, _alpha2["UG"], False
+    UY = Agency.UY  , _alpha2["UY"], False
+    UZ = Agency.IIRA, _alpha2["UZ"], False
+    VC = Agency.IIRA, _alpha2["VC"], False
+    VE = Agency.IIRA, _alpha2["VE"], False
+    VG = Agency.IIRA, _alpha2["VG"], False
+    VN = Agency.IIRA, _alpha2["VN"], False
+    VU = Agency.IIRA, _alpha2["VU"], False
+    XK = Agency.IIRA, _alpha2["XK"], False
+    YE = Agency.IIRA, _alpha2["YE"], False  # 2024-12
+    ZM = Agency.IIRA, _alpha2["ZM"], False
+    ZW = Agency.IIRA, _alpha2["ZW"], False
 # fmt: on
 
 
@@ -407,6 +407,11 @@ class ISRC:
         original string.
     prefix : str
         First 2 letters of ISRC string. See `country` property below.
+    prefix_retired : bool
+        Sometimes ISRC prefix can be retired because countries cease to
+        exist, or under management of another country, rendering existing
+        prefix useless. This property reports such status. Illegal
+        prefixes are reported as True.
     country : iso3166.Country or None
         Read-only property corresponding to country represented by first
         2 letter of ISRC. This is most likely the same as ISO 3166 2-letter
@@ -430,6 +435,14 @@ class ISRC:
     @property
     def prefix(self) -> str:
         return self.owner[:2]
+
+    @property
+    def prefix_retired(self) -> bool:
+        try:
+            alloc = Allocation[self.prefix]
+        except KeyError:
+            return True
+        return alloc.prefix_retired
 
     @property
     def country(self) -> Optional[iso3166.Country]:

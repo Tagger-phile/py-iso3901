@@ -11,7 +11,7 @@ __all__ = ("ISRC", "Agency", "Allocation")
 #
 # All allocation data taken from
 # https://isrc.ifpi.org/downloads/Valid_Characters.pdf
-# Last updated: 2023-02-08
+# Last updated: 2024-12-09
 #
 
 
@@ -27,6 +27,7 @@ class Agency(str, enum.Enum):
     BB = "COSCAP"
     BE = "SIMIM"
     BR = "Pro‐música Brazil"
+    BW = "COSBOTS"
     CA = "Connect"
     CH = "IFPI Switzerland"
     CL = "IFPI Chile"
@@ -40,10 +41,10 @@ class Agency(str, enum.Enum):
     FR = "SCPP"
     GB = "PPL UK"
     GR = "IFPI Greece"
-    HK = "IFPI Hong Kong"
+    HK = "IFPI (Hong Kong Group) Ltd"
     ID = "ASIRI"
     IE = "PPI"
-    IL = "IFPI"
+    IL = "IFPI Israel"
     IN = "IMI"
     IS = "SFH"
     IT = "FIMI"
@@ -200,11 +201,13 @@ class Allocation(_AllocationType, enum.Enum):
     # Obsolete
     PR = Agency.IIRA, _alpha2["PR"]  # Puerto Rico, now managed under US
     CS = Agency.IIRA, _SerbiaMontenegro
+    IM = Agency.IIRA, _alpha2["IM"]  # Isle of Mann  # 2024-12
     YU = Agency.IIRA, _Yugoslavia
 
     # Other Existing entries
     AD = Agency.IIRA, _alpha2["AD"]
     AE = Agency.IIRA, _alpha2["AE"]
+    AF = Agency.IIRA, _alpha2["AF"]  # 2024-12
     AG = Agency.IIRA, _alpha2["AG"]
     AI = Agency.IIRA, _alpha2["AI"]
     AL = Agency.IIRA, _alpha2["AL"]
@@ -221,18 +224,25 @@ class Allocation(_AllocationType, enum.Enum):
     BF = Agency.IIRA, _alpha2["BF"]
     BG = Agency.IIRA, _alpha2["BG"]
     BH = Agency.IIRA, _alpha2["BH"]
+    BI = Agency.IIRA, _alpha2["BI"]  # 2024-12
+    BJ = Agency.IIRA, _alpha2["BJ"]  # 2024-12
     BM = Agency.IIRA, _alpha2["BM"]
+    BN = Agency.IIRA, _alpha2["BN"]  # 2024-12
     BO = Agency.IIRA, _alpha2["BO"]
     BS = Agency.IIRA, _alpha2["BS"]
+    BW = Agency.BW  , _alpha2["BW"]  # 2024-12
     BY = Agency.IIRA, _alpha2["BY"]
     BZ = Agency.IIRA, _alpha2["BZ"]
     CD = Agency.IIRA, _alpha2["CD"]
+    CF = Agency.IIRA, _alpha2["CF"]  # 2024-12
+    CG = Agency.IIRA, _alpha2["CG"]  # 2024-12
     CI = Agency.IIRA, _alpha2["CI"]
     CL = Agency.CL  , _alpha2["CL"]
     CM = Agency.IIRA, _alpha2["CM"]
     CN = Agency.IIRA, _alpha2["CN"]
     CO = Agency.IIRA, _alpha2["CO"]
     CU = Agency.IIRA, _alpha2["CU"]
+    CV = Agency.IIRA, _alpha2["CV"]  # 2024-12
     CW = Agency.IIRA, _alpha2["CW"]
     CY = Agency.IIRA, _alpha2["CY"]
     CZ = Agency.CZ  , _alpha2["CZ"]
@@ -246,14 +256,18 @@ class Allocation(_AllocationType, enum.Enum):
     ES = Agency.ES  , _alpha2["ES"]
     ET = Agency.IIRA, _alpha2["ET"]
     FI = Agency.FI  , _alpha2["FI"]
+    GA = Agency.IIRA, _alpha2["GA"]  # 2024-12
     GD = Agency.IIRA, _alpha2["GD"]
     GE = Agency.IIRA, _alpha2["GE"]
     GG = Agency.IIRA, _alpha2["GG"]
     GH = Agency.IIRA, _alpha2["GH"]
     GI = Agency.IIRA, _alpha2["GI"]
     GM = Agency.IIRA, _alpha2["GM"]
+    GN = Agency.IIRA, _alpha2["GN"]  # 2024-12
+    GQ = Agency.IIRA, _alpha2["GQ"]  # 2024-12
     GR = Agency.GR  , _alpha2["GR"]
     GT = Agency.IIRA, _alpha2["GT"]
+    GW = Agency.IIRA, _alpha2["GW"]  # 2024-12
     GY = Agency.IIRA, _alpha2["GY"]
     HK = Agency.HK  , _alpha2["HK"]
     HN = Agency.IIRA, _alpha2["HN"]
@@ -273,13 +287,18 @@ class Allocation(_AllocationType, enum.Enum):
     JO = Agency.IIRA, _alpha2["JO"]
     JP = Agency.JP  , _alpha2["JP"]
     KE = Agency.IIRA, _alpha2["KE"]
+    KG = Agency.IIRA, _alpha2["KG"]  # 2024-12
+    KH = Agency.IIRA, _alpha2["KH"]  # 2024-12
+    KM = Agency.IIRA, _alpha2["KM"]  # 2024-12
     KN = Agency.IIRA, _alpha2["KN"]
+    KW = Agency.IIRA, _alpha2["KW"]  # 2024-12
     KY = Agency.IIRA, _alpha2["KY"]
     KZ = Agency.IIRA, _alpha2["KZ"]
     LA = Agency.IIRA, _alpha2["LA"]
     LB = Agency.IIRA, _alpha2["LB"]
     LC = Agency.IIRA, _alpha2["LC"]
     LK = Agency.IIRA, _alpha2["LK"]
+    LR = Agency.IIRA, _alpha2["LR"]  # 2024-12
     LS = Agency.IIRA, _alpha2["LS"]
     LT = Agency.LT  , _alpha2["LT"]
     LV = Agency.LV  , _alpha2["LV"]
@@ -287,9 +306,15 @@ class Allocation(_AllocationType, enum.Enum):
     MC = Agency.IIRA, _alpha2["MC"]
     MD = Agency.IIRA, _alpha2["MD"]
     ME = Agency.IIRA, _alpha2["ME"]
+    MF = Agency.IIRA, _alpha2["MF"]  # 2024-12
+    MG = Agency.IIRA, _alpha2["MG"]  # 2024-12
     MK = Agency.IIRA, _alpha2["MK"]
+    ML = Agency.IIRA, _alpha2["ML"]  # 2024-12
+    MM = Agency.IIRA, _alpha2["MM"]  # 2024-12
+    MN = Agency.IIRA, _alpha2["MN"]  # 2024-12
     MO = Agency.IIRA, _alpha2["MO"]
     MP = Agency.IIRA, _alpha2["MP"]
+    MR = Agency.IIRA, _alpha2["MR"]  # 2024-12
     MS = Agency.IIRA, _alpha2["MS"]
     MT = Agency.IIRA, _alpha2["MT"]
     MU = Agency.IIRA, _alpha2["MU"]
@@ -299,10 +324,13 @@ class Allocation(_AllocationType, enum.Enum):
     MY = Agency.MY  , _alpha2["MY"]
     MZ = Agency.IIRA, _alpha2["MZ"]
     NA = Agency.IIRA, _alpha2["NA"]
+    NE = Agency.IIRA, _alpha2["NE"]  # 2024-12
     NG = Agency.IIRA, _alpha2["NG"]
+    NI = Agency.IIRA, _alpha2["NI"]  # 2024-12
     NL = Agency.NL  , _alpha2["NL"]
     NO = Agency.NO  , _alpha2["NO"]
     NP = Agency.IIRA, _alpha2["NP"]
+    OM = Agency.IIRA, _alpha2["OM"]  # 2024-12
     PA = Agency.PA  , _alpha2["PA"]
     PE = Agency.PE  , _alpha2["PE"]
     PF = Agency.IIRA, _alpha2["PF"]
@@ -310,15 +338,18 @@ class Allocation(_AllocationType, enum.Enum):
     PH = Agency.PH  , _alpha2["PH"]
     PK = Agency.IIRA, _alpha2["PK"]
     PL = Agency.PL  , _alpha2["PL"]
+    PS = Agency.IIRA, _alpha2["PS"]  # 2024-12
     PT = Agency.PT  , _alpha2["PT"]
     PY = Agency.PY  , _alpha2["PY"]
     QA = Agency.IIRA, _alpha2["QA"]
     RO = Agency.RO  , _alpha2["RO"]
     RS = Agency.IIRA, _alpha2["RS"]
     RU = Agency.IIRA, _alpha2["RU"]
+    RW = Agency.IIRA, _alpha2["RW"]  # 2024-12
     SA = Agency.IIRA, _alpha2["SA"]
     SB = Agency.IIRA, _alpha2["SB"]
     SC = Agency.IIRA, _alpha2["SC"]
+    SD = Agency.IIRA, _alpha2["SD"]  # 2024-12
     SE = Agency.SE  , _alpha2["SE"]
     SG = Agency.SG  , _alpha2["SG"]
     SI = Agency.IIRA, _alpha2["SI"]
@@ -326,10 +357,17 @@ class Allocation(_AllocationType, enum.Enum):
     SL = Agency.IIRA, _alpha2["SL"]
     SM = Agency.IIRA, _alpha2["SM"]
     SN = Agency.IIRA, _alpha2["SN"]
+    SO = Agency.IIRA, _alpha2["SO"]  # 2024-12
+    SR = Agency.IIRA, _alpha2["SR"]  # 2024-12
+    SS = Agency.IIRA, _alpha2["SS"]  # 2024-12
     SV = Agency.IIRA, _alpha2["SV"]
     SX = Agency.IIRA, _alpha2["SX"]
+    SY = Agency.IIRA, _alpha2["SY"]  # 2024-12
     SZ = Agency.IIRA, _alpha2["SZ"]
+    TD = Agency.IIRA, _alpha2["TD"]  # 2024-12
+    TG = Agency.IIRA, _alpha2["TG"]  # 2024-12
     TH = Agency.TH  , _alpha2["TH"]
+    TL = Agency.IIRA, _alpha2["TL"]  # 2024-12
     TN = Agency.IIRA, _alpha2["TN"]
     TR = Agency.TR  , _alpha2["TR"]
     TT = Agency.TT  , _alpha2["TT"]
@@ -345,6 +383,7 @@ class Allocation(_AllocationType, enum.Enum):
     VN = Agency.IIRA, _alpha2["VN"]
     VU = Agency.IIRA, _alpha2["VU"]
     XK = Agency.IIRA, _alpha2["XK"]
+    YE = Agency.IIRA, _alpha2["YE"]  # 2024-12
     ZM = Agency.IIRA, _alpha2["ZM"]
     ZW = Agency.IIRA, _alpha2["ZW"]
 # fmt: on

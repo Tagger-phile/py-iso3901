@@ -120,6 +120,7 @@ class _AllocationType(NamedTuple):
     country: iso3166.Country
     prefix_retired: bool
 
+
 _alpha2 = iso3166.countries_by_alpha2
 
 

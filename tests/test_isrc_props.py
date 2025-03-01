@@ -39,6 +39,7 @@ def test_prop_retired():
     isrc = ISRC.parse(code)
     assert isrc.prefix_retired
 
+
 def test_prop_country():
     code = "ISRC ZZ-ZZZ-12-34567"
     isrc = ISRC.parse(code)

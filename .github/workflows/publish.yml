@@ -21,39 +21,35 @@ on:
         - patch
         default: 'patch'
 
-jobs:
-  check:
-    uses: ./.github/workflows/full_check_inc.yml
-    with:
-      gitref: ${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}
 
-  deploy:
-    needs: check
-    concurrency: deploy
+jobs:
+  tagged-release:
     permissions:
-      id-token: write
       contents: write
-      attestations: write
     runs-on: ubuntu-24.04
-    environment: pypi
     steps:
     - uses: actions/checkout@v4
       with:
         ref: ${{ github.ref }}
         fetch-depth: 0
 
-    # setup must be done inside docker action
-
     - name: Version bump is forced
       uses: python-semantic-release/python-semantic-release@v9.21.0
       if: inputs.is_forced == 'true'
       id: forced
       with:
+        # We only use version determination logic and extract
+        # changelog, never does any permanent change with it
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        git_committer_name: 'github-actions[bot]'
-        git_committer_email: '41898282+github-actions[bot]@users.noreply.github.com'
         force: ${{ inputs.ver_part }}
-        changelog: 'false'
+        build: false
+        changelog: false
+        commit: false
+        push: false
+        tag: false
+        vcs_release: false
 
     - name: Version bump is not forced
       uses: python-semantic-release/python-semantic-release@v9.21.0
@@ -61,21 +57,129 @@ jobs:
       id: unforced
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        git_committer_name: 'github-actions[bot]'
-        git_committer_email: '41898282+github-actions[bot]@users.noreply.github.com'
-        changelog: 'false'
+        build: false
+        changelog: true
+        commit: false
+        push: false
+        tag: false
+        vcs_release: false
 
-    - uses: pypa/gh-action-pypi-publish@v1.12.4
-      id: pypi_publish
+    - name: Determine semantic version
+      id: semver
       if: >-
         (steps.forced.conclusion == 'success' && steps.forced.outputs.released == 'true') ||
         (steps.unforced.conclusion == 'success' && steps.unforced.outputs.released == 'true')
+      run: |
+        if [[ "${{ steps.forced.outputs.released }}" == true ]]; then
+          echo "version=${{ steps.forced.outputs.version }}" >> $GITHUB_OUTPUT
+          echo "tag=${{ steps.forced.outputs.tag }}" >> $GITHUB_OUTPUT
+        else
+          echo "version=${{ steps.unforced.outputs.version }}" >> $GITHUB_OUTPUT
+          echo "tag=${{ steps.unforced.outputs.tag }}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Detect dirty git tree
+      run: |
+        if git diff-files --quiet; then
+          echo "::error title=No new version::semantic-release determined no new release would be created"
+          exit 1
+        else
+          git add --update
+        fi
+
+    - uses: qoomon/actions--create-commit@v1
+      with:
+        message: "chore(release): bump version to ${{ steps.semver.outputs.version }}"
+        skip-empty: true
+
+    # No bot-signed tag support for annotated tag, even with github REST API
+    # However, lightweight tag is automatically verified if underlying commit is so
+    - name: Push commit to repository
+      run: |
+        git tag ${{ steps.semver.outputs.tag }}
+        git push -u origin
+        git push -u origin ${{ steps.semver.outputs.tag }}
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: changelog
+        path: CHANGELOG.md
+        retention-days: 3
+
+    - uses: astral-sh/setup-uv@v5
+      with:
+        version: "0.6.2"
+        cache-dependency-glob: |
+          ./pyproject.toml
+
+    - name: Build package
+      run: |
+        uv build --python-preference only-system
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist/*
+        if-no-files-found: error
+
+    outputs:
+      release-tag: ${{ steps.semver.outputs.tag }}
+      release-ver: ${{ steps.semver.outputs.version }}
+
+
+  publish-pypi:
+    needs: tagged-release
+    runs-on: ubuntu-24.04
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: dist
+        path: dist
+
+    - name: Determine PyPI URL
+      uses: haya14busa/action-cond@v1
+      id: pypi-url
+      with:
+        cond: ${{ vars.OFFICIAL_PYPI || false }}
+        if_true: "https://upload.pypi.org/legacy/"
+        if_false: "https://test.pypi.org/legacy/"
+
+    - uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: ${{ steps.pypi-url.outputs.value }}
+
+
+  publish-github:
+    needs: tagged-release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: dist
+        path: dist
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: changelog
 
     - uses: actions/attest-build-provenance@v2
-      if: steps.pypi_publish.conclusion == 'success'
       with:
         subject-path: "dist/*"
 
-    - uses: python-semantic-release/upload-to-gh-release@main
+    - uses: ncipollo/release-action@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: "dist/*.whl,dist/*.tar.gz"
+        artifactErrorsFailBuild: true
+        bodyFile: CHANGELOG.md
+        draft: true
+        # At this stage github.ref is not a tag
+        tag: ${{ needs.tagged-release.outputs.release-tag }}
+

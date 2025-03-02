@@ -10,10 +10,6 @@ on:
         required: false
         type: string
         default: 'ubuntu-24.04'
-      pyver:
-        required: false
-        type: string
-        default: '3.11'
 
 jobs:
   format:
@@ -34,21 +30,18 @@ jobs:
         with:
           args: 'format'
 
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v5
         with:
-          python-version: ${{ inputs.pyver }}
-          cache: 'pip'
-
-      - name: Install python packages
-        run: >
-          pip install --progress-bar=off
-          tox
-          pytest
-          iso3166
+          version: '0.6.2'
+          cache-dependency-glob: |
+            ./pyproject.toml
 
       - name: Type checker validation on source
         run: >
-          tox run-parallel
+          uvx
+          --python-preference only-system
+          --with tox-uv=1.25.0
+          tox@4.24.1 run-parallel
           --parallel-no-spinner -v
           -e mypy,pyright
 

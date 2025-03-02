@@ -15,7 +15,13 @@ jobs:
           - '3.11'
           - '3.12'
           - '3.13'
+        os:
+          - 'ubuntu-24.04'
+        include:
+          - py: '3.7'
+            os: 'ubuntu-22.04'
     uses: ./.github/workflows/typecheck_inc.yml
     with:
       gitref: ${{ github.ref }}
+      os: ${{ matrix.os }}
       pyver: ${{ matrix.py }}

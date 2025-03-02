@@ -9,7 +9,6 @@ jobs:
       fail-fast: false
       matrix:
         py:
-          - '3.8'
           - '3.9'
           - '3.10'
           - '3.11'
@@ -17,11 +16,15 @@ jobs:
           - '3.13'
         os:
           - 'ubuntu-24.04'
+        tox-uv:
+          - '1.25.0'
         include:
-          - py: '3.7'
-            os: 'ubuntu-22.04'
+          - py: '3.8'
+            os: 'ubuntu-24.04'
+            tox-uv: '1.13.1'
     uses: ./.github/workflows/typecheck_inc.yml
     with:
       gitref: ${{ github.ref }}
       os: ${{ matrix.os }}
       pyver: ${{ matrix.py }}
+      tox-uv: ${{ matrix.tox-uv }}

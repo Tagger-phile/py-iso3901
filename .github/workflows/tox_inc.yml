@@ -7,13 +7,14 @@ on:
         required: true
         type: string
       os:
-        required: false
+        required: true
         type: string
-        default: 'ubuntu-24.04'
       pyver:
-        required: false
+        required: true
         type: string
-        default: '3.11'
+      tox-uv:
+        required: true
+        type: string
 
 jobs:
   pytest:
@@ -34,7 +35,8 @@ jobs:
     - name: Test suite
       run: >
         uvx
+        -p ${{ inputs.pyver }}
         --python-preference only-managed
         --with tox-gh-actions==3.2.0
-        --with tox-uv==1.25.0
+        --with tox-uv==${{ inputs.tox-uv }}
         tox@4.24.1 run

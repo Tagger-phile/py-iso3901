@@ -40,7 +40,7 @@ jobs:
         run: >
           uvx
           --python-preference only-system
-          --with tox-uv=1.25.0
+          --with tox-uv==1.25.0
           tox@4.24.1 run-parallel
           --parallel-no-spinner -v
           -e mypy,pyright

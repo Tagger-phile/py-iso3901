@@ -36,7 +36,7 @@ jobs:
         fetch-depth: 0
 
     - name: Version bump is forced
-      uses: python-semantic-release/python-semantic-release@v10.2.0
+      uses: python-semantic-release/python-semantic-release@v9
       if: inputs.is_forced == 'true'
       id: forced
       with:
@@ -52,7 +52,7 @@ jobs:
         vcs_release: false
 
     - name: Version bump is not forced
-      uses: python-semantic-release/python-semantic-release@v10.2.0
+      uses: python-semantic-release/python-semantic-release@v9
       if: inputs.is_forced == 'false'
       id: unforced
       with:

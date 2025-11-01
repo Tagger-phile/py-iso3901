@@ -100,7 +100,7 @@ jobs:
         git push -u origin
         git push -u origin ${{ steps.semver.outputs.tag }}
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: changelog
         path: CHANGELOG.md
@@ -116,7 +116,7 @@ jobs:
       run: |
         uv build --python-preference only-system
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: dist
         path: dist/*

@@ -57,6 +57,8 @@ jobs:
           - 'macos-14'
         tox-uv:
           - '1.29.0'
+        tox-ver:
+          - '4.32.0'
         include:
           - py: '3.8'
             os: 'ubuntu-24.04'

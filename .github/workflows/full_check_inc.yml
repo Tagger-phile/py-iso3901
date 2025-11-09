@@ -14,51 +14,74 @@ jobs:
       fail-fast: false
       matrix:
         py:
-          - '3.9'
           - '3.10'
           - '3.11'
           - '3.12'
           - '3.13'
+          - '3.14'
         os:
           - 'ubuntu-24.04'
         tox-uv:
-          - '1.25.0'
+          - '1.29.0'
+        tox-ver:
+          - '4.32.0'
         include:
           - py: '3.8'
             os: 'ubuntu-24.04'
             tox-uv: '1.13.1'
+            tox-ver: '4.24.1'
+          - py: '3.9'
+            os: 'ubuntu-24.04'
+            tox-uv: '1.28.1'
+            tox-ver: '4.30.3'
     with:
       gitref: ${{ inputs.gitref }}
       pyver: ${{ matrix.py }}
       os: ${{ matrix.os }}
       tox-uv: ${{ matrix.tox-uv }}
+      tox-ver: ${{ matrix.tox-ver }}
 
   pytests:
     strategy:
       fail-fast: false
       matrix:
         py:
-          - '3.9'
           - '3.10'
           - '3.11'
           - '3.12'
           - '3.13'
+          - '3.14'
         os:
           - 'ubuntu-24.04'
           - 'windows-2022'
           - 'macos-14'
         tox-uv:
-          - '1.25.0'
+          - '1.29.0'
         include:
           - py: '3.8'
             os: 'ubuntu-24.04'
             tox-uv: '1.13.1'
+            tox-ver: '4.24.1'
           - py: '3.8'
             os: 'windows-2022'
             tox-uv: '1.13.1'
+            tox-ver: '4.24.1'
           - py: '3.8'
             os: 'macos-14'
             tox-uv: '1.13.1'
+            tox-ver: '4.24.1'
+          - py: '3.9'
+            os: 'ubuntu-24.04'
+            tox-uv: '1.28.1'
+            tox-ver: '4.30.3'
+          - py: '3.9'
+            os: 'windows-2022'
+            tox-uv: '1.28.1'
+            tox-ver: '4.30.3'
+          - py: '3.9'
+            os: 'macos-14'
+            tox-uv: '1.28.1'
+            tox-ver: '4.30.3'
 
     uses: ./.github/workflows/tox_inc.yml
     with:
@@ -66,3 +89,4 @@ jobs:
       os: ${{ matrix.os }}
       pyver: ${{ matrix.py }}
       tox-uv: ${{ matrix.tox-uv }}
+      tox-ver: ${{ matrix.tox-ver }}

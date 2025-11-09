@@ -15,6 +15,9 @@ on:
       tox-uv:
         required: true
         type: string
+      tox-ver:
+        required: true
+        type: string
 
 jobs:
   pytest:
@@ -39,4 +42,4 @@ jobs:
         --python-preference only-managed
         --with tox-gh-actions==3.2.0
         --with tox-uv==${{ inputs.tox-uv }}
-        tox@4.24.1 run
+        tox@${{ inputs.tox-ver }} run

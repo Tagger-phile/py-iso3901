@@ -15,6 +15,9 @@ on:
       tox-uv:
         required: true
         type: string
+      tox-ver:
+        required: true
+        type: string
 
 jobs:
   typechk:
@@ -38,6 +41,6 @@ jobs:
         -p ${{ inputs.pyver }}
         --python-preference only-managed
         --with tox-uv==${{ inputs.tox-uv }}
-        tox@4.24.1 run-parallel
+        tox@${{ inputs.tox-ver }} run-parallel
         --parallel-no-spinner -v
         -e mypy,pyright

@@ -45,7 +45,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         force: ${{ inputs.ver_part }}
         build: false
-        changelog: false
+        changelog: true
         commit: false
         push: false
         tag: false

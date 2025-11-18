@@ -88,6 +88,14 @@ Traceback (most recent call last):
 KeyError: 'XY'
 ```
 
+Finally, it is noteworthy that prefix allocation date is available as [python date](https://docs.python.org/3/library/datetime.html#date-objects) constant:
+
+```pycon
+>>> import iso3901
+>>> iso3901.DB_DATE
+datetime.date(2025, 11, 4)
+```
+
 ## Caveats
 
 In the _very rare_ case that no data validation is desired, it is possible to initiate object directly. Be warned that supplying free form data would result in illegal ISRC code:

@@ -2,18 +2,20 @@ from __future__ import annotations
 
 import enum
 from dataclasses import dataclass, field
+from datetime import date
 from typing import TYPE_CHECKING, NamedTuple, Optional, Tuple, Type
 
 import iso3166
 
-__all__ = ("ISRC", "Agency", "Allocation")
+__all__ = ("DB_DATE", "ISRC", "Agency", "Allocation")
 
 #
 # All allocation data taken from
 # https://isrc.ifpi.org/images/downloads/Valid_Characters_in_the_ISRC_Prefix.pdf
 # Old link: https://isrc.ifpi.org/downloads/Valid_Characters.pdf
-# Last updated: 2025-11-04
 #
+
+DB_DATE = date(2025, 11, 4)
 
 
 class Agency(str, enum.Enum):

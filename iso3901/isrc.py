@@ -10,8 +10,9 @@ __all__ = ("ISRC", "Agency", "Allocation")
 
 #
 # All allocation data taken from
-# https://isrc.ifpi.org/downloads/Valid_Characters.pdf
-# Last updated: 2024-12-09
+# https://isrc.ifpi.org/images/downloads/Valid_Characters_in_the_ISRC_Prefix.pdf
+# Old link: https://isrc.ifpi.org/downloads/Valid_Characters.pdf
+# Last updated: 2025-11-04
 #
 
 
@@ -28,9 +29,10 @@ class Agency(str, enum.Enum):
     BE = "SIMIM"
     BR = "Pro‐música Brazil"
     BW = "COSBOTS"
-    CA = "Connect"
+    CA = "Re:Sound"
     CH = "IFPI Switzerland"
     CL = "IFPI Chile"
+    CR = "FONOTICA"
     CZ = "INTERGRAM"
     DE = "BVMI"
     DK = "GRAMEK DK"
@@ -68,7 +70,7 @@ class Agency(str, enum.Enum):
     SE = "IFPI Sweden"
     SG = "Recording Industry Association Singapore"
     SK = "SLOVGRAM"
-    TC = "TuneCore Inc"
+    TC = "TuneCore"
     TH = "TECA"
     TR = "MU‐YAP"
     TT = "COTT"
@@ -142,8 +144,9 @@ class Allocation(_AllocationType, enum.Enum):
     # of IIRA's own reserved prefix ("DG"). There is not enough info
     # to conclude if such confusion is intentional or an oversight.
     CP = Agency.IIRA, _Worldwide, False
-    DG = Agency.IIRA, _Worldwide, False
+    DG = Agency.IIRA, _Worldwide, False  # also to Turks and Caicos Islands
     QN = Agency.IIRA, _Worldwide, False  # 2024-06
+    VV = Agency.IIRA, _Worldwide, False  # 2025-11
     ZZ = Agency.IIRA, _Worldwide, False
     TC = Agency.TC  , _Worldwide, False
 
@@ -231,6 +234,7 @@ class Allocation(_AllocationType, enum.Enum):
     BN = Agency.IIRA, _alpha2["BN"], False  # 2024-12
     BO = Agency.IIRA, _alpha2["BO"], False
     BS = Agency.IIRA, _alpha2["BS"], False
+    BT = Agency.IIRA, _alpha2["BT"], False  # 2025-11
     BW = Agency.BW  , _alpha2["BW"], False  # 2024-12
     BY = Agency.IIRA, _alpha2["BY"], False
     BZ = Agency.IIRA, _alpha2["BZ"], False
@@ -242,6 +246,7 @@ class Allocation(_AllocationType, enum.Enum):
     CM = Agency.IIRA, _alpha2["CM"], False
     CN = Agency.IIRA, _alpha2["CN"], False
     CO = Agency.IIRA, _alpha2["CO"], False
+    CR = Agency.CR,   _alpha2["CR"], False  # 2025-11
     CU = Agency.IIRA, _alpha2["CU"], False
     CV = Agency.IIRA, _alpha2["CV"], False  # 2024-12
     CW = Agency.IIRA, _alpha2["CW"], False

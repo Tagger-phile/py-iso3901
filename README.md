@@ -117,7 +117,9 @@ Following documents are consulted when writing code:
 
 - [ISRC Handbook, 4th edition](https://www.ifpi.org/wp-content/uploads/2021/02/ISRC_Handbook.pdf)
 - [ISRC Agency Bulletin 2015/01](https://isrc.ifpi.org/downloads/ISRC_Bulletin-2015-01.pdf)
-- [Newest valid ISRC prefixes](https://isrc.ifpi.org/downloads/Valid_Characters.pdf)
+- [Newest valid ISRC prefixes][valid-char-pdf]
+
+[valid-char-pdf]: https://isrc.ifpi.org/images/downloads/Valid_Characters_in_the_ISRC_Prefix.pdf
 
 ## Q&A
 
@@ -131,7 +133,7 @@ Following documents are consulted when writing code:
 
 3. _The "country code" `QM` is already known for use in United States, and `ZZ` reserved for International ISRC Agency, as described in various ISRC Bulletins. Is there any plan to add modern ISRC Registrant allocations and do a mapping between newer prefixes and countries?_
 
-   Actually, the newest bulletin dated 2015 had pushed a new standard that no more binds country with the 2-letter prefix. That said, since `0.3.0` version, country code is validated to conform to [newest published prefixes](https://isrc.ifpi.org/downloads/Valid_Characters.pdf) &mdash; Dec 2024 as of writing. There exists quite a number of countries unmanaged by any recording industry agencies, so validation still provides some benefit.
+   Actually, the newest bulletin dated 2015 had pushed a new standard that no more binds country with the 2-letter prefix. That said, since `0.3.0` version, country code is validated to conform to [newest published prefixes][valid-char-pdf] &mdash; Nov 2025 as of writing. There exists quite a number of countries unmanaged by any recording industry agencies, so validation still provides some benefit.
 
 ## Alternatives
 
